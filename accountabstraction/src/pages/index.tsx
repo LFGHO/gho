@@ -87,13 +87,13 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Based Account Abstraction</title>
-        <meta name="description" content="Based Account Abstraction" />
+        <title>Account Abstraction</title>
+        <meta name="description" content="Account Abstraction" />
       </Head>
       <main className={styles.main}>
-        <h1>Based Account Abstraction</h1>
+        <h1>Account Abstraction</h1>
         <h2>Connect and Mint your AA powered NFT now</h2>
-        {!loading && !address && <button onClick={connect} className={styles.connect}>Connect to Based Web3</button>}
+        {!loading && !address && <button onClick={connect} className={styles.connect}>Connect to Web3</button>}
         {loading && <p>Loading Smart Account...</p>}
         {address && <h2>Smart Account: {address}</h2>}
       </main>
