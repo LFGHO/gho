@@ -21,9 +21,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const particle = new ParticleAuthModule.ParticleNetwork({
-    projectId: "",
-    clientKey: "",
-    appId: "",
+    projectId: "0ec9a296-e69a-4e65-923d-5930fcefc689",
+    clientKey: "cKQkdOzpvM34CsgLrQYHRpol5NZtTqE6S1EhuQvg",
+    appId: "fc16938e-1672-49d0-8309-0655aa433a4b",
     wallet: {
       displayWalletEntry: true,
       defaultWalletEntryPosition: ParticleAuthModule.WalletEntryPosition.BR,
@@ -32,13 +32,13 @@ export default function Home() {
 
 
   const bundler: IBundler = new Bundler({
-    bundlerUrl: 'kuch daal de',// bundler URL from dashboard use 84531 as chain id if you are following this on base goerli,
+    bundlerUrl: 'https://paymaster.biconomy.io/api/v1/80001/t0JXtO3o_.134b8c3f-b138-427d-b92f-89d07cabe440', // Polygon Mumbai Testnet
     chainId: ChainId.BASE_GOERLI_TESTNET,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
 
   const paymaster: IPaymaster = new BiconomyPaymaster({
-    paymasterUrl: 'put something',// paymaster url from dashboard
+    paymasterUrl: 'https://paymaster.biconomy.io/api/v1/11155111/VGccIdSAN.c2b9de56-fe3f-40c5-9366-b5c002816c35',// paymaster url from dashboard
   })
 
   const [address, setAddress] = useState<string>("");
