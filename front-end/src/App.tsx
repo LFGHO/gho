@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useState } from "react";
 import "./App.css";
-import { ChainId } from "@biconomy/core-types";
 import { ethers } from "ethers";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import {
@@ -15,6 +14,7 @@ import {
 } from "@biconomy/modules";
 import Counter from "./Components/Counter";
 import magic from "./services/magic.service";
+import ChainService from "./services/chain.service";
 
 function App() {
   // TO-do: add chain selector?
@@ -25,22 +25,21 @@ function App() {
 
   const connect = useCallback(async () => {
     const bundler: IBundler = new Bundler({
-      bundlerUrl: `https://bundler.biconomy.io/api/v2/${ChainId.POLYGON_MUMBAI}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
-      chainId: ChainId.POLYGON_MUMBAI,
+      bundlerUrl: `https://bundler.biconomy.io/api/v2/${
+        ChainService.getInstance().chainId
+      }/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
+      chainId: ChainService.getInstance().chainId,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     });
-
     const paymaster: IPaymaster = new BiconomyPaymaster({
       paymasterUrl: `https://paymaster.biconomy.io/api/v1/${
-        ChainId.POLYGON_MUMBAI
+        ChainService.getInstance().chainId
       }/${import.meta.env.VITE_PAYMASTER_APIKEY}`,
     });
     try {
       await magic.wallet.connectWithUI();
-      const web3Provider = new ethers.providers.Web3Provider(
-        magic.rpcProvider as any,
-        "any"
-      );
+      const provider = await magic.wallet.getProvider();
+      const web3Provider = new ethers.providers.Web3Provider(provider, "any");
       setProvider(web3Provider);
       const module = await ECDSAOwnershipValidationModule.create({
         signer: web3Provider.getSigner(),
@@ -48,7 +47,7 @@ function App() {
       });
       setLoading(true);
       const biconomySmartAccount = await BiconomySmartAccountV2.create({
-        chainId: ChainId.POLYGON_MUMBAI,
+        chainId: ChainService.getInstance().chainId,
         bundler: bundler,
         paymaster: paymaster,
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

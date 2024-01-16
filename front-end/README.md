@@ -14,4 +14,4 @@ this is the contract we want to interact with temp for now
 VITE_COUNTER_CONTRACT_ADDRESS=123
 
 this is rpc provider url for polygon mumbai recommending alchemy
-VITE_POLYGON_RPC_URL=123
+VITE_RPC_URL=123

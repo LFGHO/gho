@@ -57,18 +57,15 @@ const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
         "function incrementCount()",
       ]);
       const data = incrementTx.encodeFunctionData("incrementCount");
-
       const tx1: Transaction = {
         to: counterContract!.address,
         data: data,
       };
-
       const userOp = await smartAccount.buildUserOp([tx1], {
         paymasterServiceData: {
           mode: PaymasterMode.SPONSORED,
         },
       });
-
       try {
         const userOpResponse = await smartAccount.sendUserOp(userOp);
         const transactionDetails = await userOpResponse.wait();
