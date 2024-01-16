@@ -19,7 +19,7 @@ contract GHOVault is ERC4626, Ownable {
     IERC20 public investmentToken; // GHO Token
     IUniswapV2Router public dexRouter; // Uniswap V2 Router
 
-    constructor(IERC20 _ghoToken, IUniswapV2Router _dexRouter) ERC4626(_ghoToken) {
+    constructor (IERC20 _ghoToken, IUniswapV2Router _dexRouter) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") {
         investmentToken = _ghoToken;
         dexRouter = _dexRouter;
     }
@@ -55,12 +55,4 @@ contract GHOVault is ERC4626, Ownable {
         // Mint vault shares to the depositor based on the amount of GHO received
         _mint(msg.sender, amountGHO);
     }
-
-    // Override the _beforeTokenTransfer function to handle custom logic if needed
-    function _beforeTokenTransfer(address from, address to, uint256 amount) internal override {
-        super._beforeTokenTransfer(from, to, amount);
-        // Custom logic here
-    }
-
-    // Additional functions for withdrawal, investment, etc.
 }

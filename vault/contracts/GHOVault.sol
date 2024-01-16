@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
@@ -19,7 +19,7 @@ contract GHOVault is ERC4626, Ownable {
     IERC20 public investmentToken; // GHO Token
     IUniswapV2Router public dexRouter; // Uniswap V2 Router
 
-    constructor(IERC20 _ghoToken, IUniswapV2Router _dexRouter) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") {
+    constructor(IERC20 _ghoToken, IUniswapV2Router _dexRouter) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") Ownable(msg.sender) {
         investmentToken = _ghoToken;
         dexRouter = _dexRouter;
     }

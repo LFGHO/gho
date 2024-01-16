@@ -21,7 +21,14 @@ async function main() {
   // console.log("GHOVault Factory:", GHOVault)
 
   const ghoVault = await GHOVault.deploy(ghoTokenAddress, uniswapRouterAddress);
+  await ghoVault.deployed();
+
   console.log("GHOVault address:", ghoVault.address);
+  console.log(ghoVault);
+
+  await ghoVault.getAddress().then((address) => {
+    console.log("GHOVault address:", address);
+  });
 }
 
 main()

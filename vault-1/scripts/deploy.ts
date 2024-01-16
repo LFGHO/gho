@@ -1,15 +1,36 @@
-import { formatEther, parseEther } from "viem";
-import hre from "hardhat";
+import { createPublicClient, createTestClient, http } from "viem";
+import { sepolia } from "viem/chains";
+
+
+const { API_URL, PRIVATE_KEY } = process.env;
+
+const client = createPublicClient({
+  chain: sepolia,
+  transport: http("https://eth-sepolia.g.alchemy.com/v2/5fnaMncNDz4abaRBqh3y3cdlpvsmxzi8"),
+});
 
 async function main() {
-  const [deployer] = await ethers.getSigners();
+  // Deploy the GHOVault contract to sepolia
+  const vault = await client.deploy("GHOVault", {
+    from: PRIVATE_KEY,
+  });
 
-  console.log("Deploying contracts with the account:", deployer.address);
+  // Print the address of the deployed contract
+  console.log("GHOVault deployed to:", vault.address);
 
-  const GHOVault = await ethers.getContractFactory("GHOVault");
-  const ghoVault = await GHOVault.deploy(/* Constructor arguments here */);
+  // Print the transaction hash of the deployment
+  console.log("Transaction hash:", vault.deployTransaction.hash);
 
-  console.log("GHOVault address:", ghoVault.address);
+  // Wait for the transaction to be mined
+  await vault.deployTransaction.wait();
+
+  // Verify the contract on Etherscan
+  await client.verify(vault.address, {
+    from: PRIVATE_KEY,
+  });
+
+  // Print the Etherscan URL of the contract
+  console.log("Etherscan URL:", vault.etherscanUrl);
 }
 
 main()
@@ -19,23 +40,6 @@ main()
     process.exit(1);
   });
 
-
-// async function main() {
-//   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-//   const unlockTime = BigInt(currentTimestampInSeconds + 60);
-
-//   const lockedAmount = parseEther("0.001");
-
-//   const lock = await hre.viem.deployContract("Lock", [unlockTime], {
-//     value: lockedAmount,
-//   });
-
-//   console.log(
-//     `Lock with ${formatEther(
-//       lockedAmount
-//     )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-//   );
-// }
 
 // // We recommend this pattern to be able to use async/await everywhere
 // // and properly handle errors.
