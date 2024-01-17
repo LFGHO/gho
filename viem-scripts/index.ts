@@ -27,7 +27,7 @@ async function main() {
         abi: abi,
         account: account,
         bytecode: bytecode,
-        args: [`0x${process.env.GHO_TOKEN_ADDRESS}`, `0x${process.env.UNISWAP_ROUTER_ADDRESS}`],
+        args: [`0x${process.env.GHO_TOKEN_ADDRESS}`, `0x{process.env.UNISWAP_ROUTER_ADDRESS}`],
     });
 
     console.log(`Contract deployed with hash: ${hash}`);

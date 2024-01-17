@@ -40,6 +40,13 @@ LINK_A_TOKEN = 0x3FfAf50D4F4E96eB78f2407c090b72e86eCaed24
 Decimals = 18
 ```
 
+```
+DAI = 0xFF34B3d4Aee8ddCd6F9AFFFB6Fe49bD371b8a357
+DAI_A_TOKEN = 0x29598b72eb5CeBd806C5dCD549490FdA35B13cD8
+Decimals = 18
+```
+
+
 
 ## Aave V3 on Sepolia Testnet
 
