@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import { createPublicClient, createWalletClient, http } from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
 import {sepolia} from 'viem/chains';
-import {abi, bytecode} from './GHOVaultContract';
+import {abi, bytecode} from './test_counterContracts';
 
 dotenv.config();
 
@@ -27,7 +27,7 @@ async function main() {
         abi: abi,
         account: account,
         bytecode: bytecode,
-        args: [`0x${process.env.GHO_TOKEN_ADDRESS}`, `0x${process.env.UNISWAP_ROUTER_ADDRESS}`],
+        args: [BigInt(10)],
     });
 
     console.log(`Contract deployed with hash: ${hash}`);
