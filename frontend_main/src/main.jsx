@@ -7,11 +7,16 @@ import {
 import './index.css'
 import Protfolio from './pages/Protfolio/Protfolio';
 import Login from './pages/Auth/Login';
+import Questions from './pages/Questions/Questions';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "/get-started",
+    element: <Questions />,
   },
   {
     path: "/portfolio",

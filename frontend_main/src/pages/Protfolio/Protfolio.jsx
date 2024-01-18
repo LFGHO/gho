@@ -6,7 +6,7 @@ function Protfolio() {
   return (
     <>
     <Heading text="Your Portfolio"/>
-    <ProtfolioCard />
+    <ProtfolioCard  />
     </>
   )
 }
