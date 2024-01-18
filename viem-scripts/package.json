@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node index.ts",
     "getweth": "ts-node getWeth.ts",
-    "read": "ts-node readContract.ts"
+    "read": "ts-node readContract.ts",
+    "deployUniswapV2Factory": "ts-node ./UniswapV2Factory/index.ts",
+    "deployUniswapV2pRouterV2": "ts-node ./UniswapV2Router02/index.ts",
+    "initCodePairHash": "ts-node ./sepoliaDex/initCodePairHash.ts"
   },
   "keywords": [],
   "author": "",
