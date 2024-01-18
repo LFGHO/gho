@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import { createPublicClient, createWalletClient, http } from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
 import {sepolia} from 'viem/chains';
-import {abi, bytecode} from './GHOVault/GHOVaultContract';
+import {abi, bytecode} from './GHOVaultContract';
 
 dotenv.config();
 
