@@ -6,12 +6,19 @@ const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: "0.5.5",
+        version: "0.5.16",
+        settings: {},
       },
       {
         version: "0.6.6",
         settings: {},
       },
+      {
+        version: "0.8.19",
+      },
+      {
+        version: "0.8.20",
+      }
     ],
   },
 };
