@@ -2,6 +2,39 @@ import * as chains from './chains';
 
 // If you add coins for a new network, make sure Weth address (for the router you are using) is the first entry
 
+const SEPOLIACoins = [
+  {
+    name: "Ether",
+    abbr: "ETH",
+    address: "0xC558DBdd856501FCd9aaF1E62eae57A9F0629a3c", // Weth address is fetched from the router
+  },
+  {
+    name: "GHO",
+    abbr: "GHO",
+    address: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60", // Weth address is fetched from the router
+  },
+  {
+    name: "USDC",
+    abbr: "USDC",
+    address: "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8", // Weth address is fetched from the router
+  },
+  {
+    name: "DAI",
+    abbr: "DAI",
+    address: "0xFF34B3d4Aee8ddCd6F9AFFFB6Fe49bD371b8a357", // Weth address is fetched from the router
+  },
+  {
+    name: "AAVE",
+    abbr: "AAVE",
+    address: "0x88541670E55cC00bEEFD87eB59EDd1b7C511AC9a", // Weth address is fetched from the router
+  },
+  {
+    name: "LINK",
+    abbr: "LINK",
+    address: "0xf8Fb3713D459D7C1018BD0A49D19b4C44290EBE5", // Weth address is fetched from the router
+  },
+]
+
 const AUTONITYCoins = [
   {
     name: "Auton",
@@ -243,6 +276,7 @@ const GÖRLICoins = [
 
 const COINS = new Map();
 COINS.set(chains.ChainId.MAINNET, MAINNETCoins);
+COINS.set(chains.ChainId.SEPOLIA, SEPOLIACoins);
 COINS.set(chains.ChainId.ROPSTEN, ROPSTENCoins);
 COINS.set(chains.ChainId.RINKEBY, RINKEBYCoins);
 COINS.set(chains.ChainId.GÖRLI, GÖRLICoins);

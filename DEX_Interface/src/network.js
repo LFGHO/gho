@@ -43,7 +43,9 @@ const Web3Provider = (props) => {
   async function setupConnection() {
     try {
       console.log('lets go!');
-      network.provider = new ethers.providers.Web3Provider(window.ethereum);
+      // network.provider = new ethers.providers.Web3Provider(window.ethereum);
+      const url = "https://eth-sepolia.g.alchemy.com/v2/5fnaMncNDz4abaRBqh3y3cdlpvsmxzi8";
+      network.provider = new ethers.providers.JsonRpcProvider(url);
       network.signer = await network.provider.getSigner();
       await getAccount().then(async (result) => {
         network.account = result;
