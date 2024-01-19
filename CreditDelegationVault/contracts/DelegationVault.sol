@@ -17,7 +17,7 @@ library FeeCalculator {
         } else {
             // Fee calculation for time beyond 24 hours
             uint256 maxFeeBasisPoints = feeBasisPoints; // 6%
-            uint256 minAmountForReducedFee = 100000; // Minimum amount threshold for reduced fee
+            uint256 minAmountForReducedFee = 100000; // Minimum amount threshold for reduced fee //! (To avoid divide by zero error)
 
             uint256 effectiveFeeBasisPoints;
             if (amount < minAmountForReducedFee) {
