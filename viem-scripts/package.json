@@ -6,11 +6,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node index.ts",
-    "getweth": "ts-node getWeth.ts",
+
     "read": "ts-node readContract.ts",
+    "getweth": "ts-node getWeth.ts",
+    
+    "deployGHOVault": "ts-node ./GHOVault/index.ts",
+    "readGHOVault": "ts-node ./GHOVault/GHOreadContract.ts",
+    "depositGHOVault": "ts-node ./GHOVault/depositMoney.ts",
+    "withdrawGHOVault": "ts-node ./GHOVault/withdrawMoney.ts",
+
+    "deployDelegationVault": "ts-node ./CreditDelegationVault/index.ts",
+    "readDelegationVault": "ts-node ./CreditDelegationVault/ReadDelegationContract.ts",
+    "depositDelegationVault": "ts-node ./CreditDelegationVault/depositMoney.ts",
+    "withdrawDelegationVault": "ts-node ./CreditDelegationVault/withdrawMoney.ts",
+    
     "deployUniswapV2Factory": "ts-node ./UniswapV2Factory/index.ts",
-    "deployUniswapV2pRouterV2": "ts-node ./UniswapV2Router02/index.ts",
-    "initCodePairHash": "ts-node ./sepoliaDex/initCodePairHash.ts"
+    "initCodePairHash": "ts-node ./sepoliaDex/initCodePairHash.ts",
+
+    "deployUniswapV2pRouterV2": "ts-node ./UniswapV2Router02/index.ts"
   },
   "keywords": [],
   "author": "",

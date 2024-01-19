@@ -1,9 +1,9 @@
-const CONTRACT_ADDRESS="0x18d179c1c1e1dea8435625b6265fb3a8ea4bf77a"
+const CONTRACT_ADDRESS="0xdca047042d188465d94d6a44141c94a5ee3ab889"
 import dotenv from 'dotenv';
 import { createPublicClient, createWalletClient, http } from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
 import {sepolia} from 'viem/chains';
-import {abi, bytecode} from './GHOVaultContract';
+import {abi, bytecode} from './DelegationVaultContract';
 
 dotenv.config();
 
@@ -27,7 +27,7 @@ async function main() {
     let feesBasisPoints = await publicClient.readContract({
         address: CONTRACT_ADDRESS,
         abi: abi,
-        functionName: "owner",
+        functionName: "asset",
     })
     console.log("Initial value of counter = ", feesBasisPoints.toString());
 
