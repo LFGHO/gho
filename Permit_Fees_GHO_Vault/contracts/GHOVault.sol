@@ -38,7 +38,7 @@ contract GHOVault is ERC4626, Ownable {
         uint256 amount;
         uint256 depositTime;
     }
-    mapping(address => Investment[]) public investments;
+    mapping(address => Investment[]) private investments;
 
 
     // Event declarations
@@ -63,6 +63,8 @@ contract GHOVault is ERC4626, Ownable {
             // Rest of the logic to adjust the investment after fee deduction
         }
         investmentToken.transfer(owner(), totalFee); // Assuming protocolFeeReceiver is the fee recipient
+        assets -= totalFee; // Deduct this fee from the assets being withdrawn
+        
         // Rest of the withdraw logic
         return super.withdraw(assets, receiver, _owner);
     }

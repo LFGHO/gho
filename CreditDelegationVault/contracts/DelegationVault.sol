@@ -12,11 +12,11 @@ library FeeCalculator {
         uint256 timeElapsed = block.timestamp - depositTime;
 
         // If time elapsed is less than 24 hours (86400 seconds), charge 30% fee
-        if (timeElapsed < 86400) {
+        if (timeElapsed < feeDecreaseInterval * 1 days) {
             return (amount * 3000) / 10000; // 30% fee
         } else {
             // Fee calculation for time beyond 24 hours
-            uint256 maxFeeBasisPoints = 600; // 6%
+            uint256 maxFeeBasisPoints = feeBasisPoints; // 6%
             uint256 minAmountForReducedFee = 100000; // Minimum amount threshold for reduced fee
 
             uint256 effectiveFeeBasisPoints;
@@ -34,22 +34,19 @@ library FeeCalculator {
     }
 }
 
-
 //* User can only invest in GHO
 contract DelegationVault is ERC4626, Ownable {
-    uint256 public feeBasisPoints = 500; // 5% High Fee due to high risk and high yield
-    uint256 public feeDecreaseInterval = 1 days; // 
+    uint256 public feeBasisPoints = 600; // 5% High Fee due to high risk and high yield
+    uint256 public feeDecreaseInterval = 1 days; // Intraday Trading
 
     IERC20 public investmentToken; // GHO Token
-    
     uint256 private investedAmount; // Variable to track the amount withdrawn for investment
 
     struct Investment {
         uint256 amount;
         uint256 depositTime;
     }
-    mapping(address => Investment[]) public investments;
-
+    mapping(address => Investment) private userToInvestment;
 
     // Event declarations
     event Invested(address indexed owner, uint256 amount);
@@ -65,13 +62,12 @@ contract DelegationVault is ERC4626, Ownable {
     }
 
     function withdraw(uint256 assets, address receiver, address _owner) public override returns (uint256 shares) {
-        uint256 totalFee = 0;
-        for (uint i = 0; i < investments[_owner].length; i++) {
-            uint256 fee = FeeCalculator.calculateTimeBasedFee(investments[_owner][i].amount, investments[_owner][i].depositTime, feeBasisPoints, feeDecreaseInterval);
-            totalFee += fee;
-            // Rest of the logic to adjust the investment after fee deduction
-        }
-        investmentToken.transfer(owner(), totalFee); // Assuming protocolFeeReceiver is the fee recipient
+        uint256 fee = FeeCalculator.calculateTimeBasedFee(investments[_owner].amount, investments[_owner].depositTime, feeBasisPoints, feeDecreaseInterval);
+        investmentToken.transfer(owner(), fee); // Assuming protocolFeeReceiver is the fee recipient
+        
+        // Deduct this fee from the assets being withdrawn
+        assets -= fee;
+
         // Rest of the withdraw logic
         return super.withdraw(assets, receiver, _owner);
     }
