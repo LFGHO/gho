@@ -6,14 +6,34 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+// Takes a max fee of 6% for investments 
 library FeeCalculator {
     function calculateTimeBasedFee(uint256 amount, uint256 depositTime, uint256 feeBasisPoints, uint256 feeDecreaseInterval) internal view returns (uint256) {
         uint256 timeElapsed = block.timestamp - depositTime;
-        uint256 feeReduction = (timeElapsed / feeDecreaseInterval) * 100; // Reducing 100 basis points for each interval passed
-        uint256 effectiveFeeBasisPoints = feeBasisPoints > feeReduction ? feeBasisPoints - feeReduction : 0;
-        return (amount * effectiveFeeBasisPoints) / 10000;
+
+        // If time elapsed is less than 24 hours (86400 seconds), charge 30% fee
+        if (timeElapsed < 86400) {
+            return (amount * 3000) / 10000; // 30% fee
+        } else {
+            // Fee calculation for time beyond 24 hours
+            uint256 maxFeeBasisPoints = 600; // 6%
+            uint256 minAmountForReducedFee = 100000; // Minimum amount threshold for reduced fee
+
+            uint256 effectiveFeeBasisPoints;
+            if (amount < minAmountForReducedFee) {
+                effectiveFeeBasisPoints = maxFeeBasisPoints;
+            } else {
+                uint256 inverseFeeRate = 10000000 / amount; // Adjusted inverse fee calculation
+
+                // Ensure the fee is less than 6%
+                effectiveFeeBasisPoints = inverseFeeRate < maxFeeBasisPoints ? inverseFeeRate : maxFeeBasisPoints;
+            }
+
+            return (amount * effectiveFeeBasisPoints) / 10000;
+        }
     }
 }
+
 
 //* User can only invest in GHO
 contract DelegationVault is ERC4626, Ownable {
