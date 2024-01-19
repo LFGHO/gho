@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useState } from "react";
 import "./App.css";
@@ -13,15 +14,54 @@ import {
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
 } from "@biconomy/modules";
 import Counter from "./Components/Counter";
-import magic from "./services/magic.service";
+import magic, { createMagicSigner } from "./services/magic.service";
 import ChainService from "./services/chain.service";
+import { AlchemyProvider } from "@alchemy/aa-alchemy";
+import {
+  LightSmartContractAccount,
+  getDefaultLightAccountFactoryAddress,
+} from "@alchemy/aa-accounts";
+import { sepolia } from "viem/chains";
 
+const chain = sepolia;
 function App() {
-  // TO-do: add chain selector?
   const [smartAccount, setSmartAccount] = useState<BiconomySmartAccountV2>();
   const [loading, setLoading] = useState<boolean>(false);
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
+  const [alchemyProvider, setAlchemyProvider] = useState<
+    AlchemyProvider & {
+      account: LightSmartContractAccount<any>;
+    }
+  >();
   const [address, setAddress] = useState<string>("");
+
+  const logout = useCallback(async () => {
+    magic.wallet.disconnect();
+  }, []);
+
+  const connectAlchemy = useCallback(async () => {
+    const magicSigner = await createMagicSigner();
+    await magicSigner.authenticate({
+      authenticate: async () => {
+        await magicSigner.inner.wallet.connectWithUI();
+      },
+    });
+    console.log(await magicSigner.inner.user.getInfo());
+    const provider = new AlchemyProvider({
+      rpcUrl: import.meta.env.VITE_RPC_URL,
+      chain,
+    }).connect(
+      (rpcClient) =>
+        new LightSmartContractAccount({
+          chain: rpcClient.chain,
+          owner: magicSigner,
+          factoryAddress: getDefaultLightAccountFactoryAddress(rpcClient.chain),
+          rpcClient,
+        })
+    );
+    setAddress(await provider.getAddress());
+    setAlchemyProvider(provider);
+  }, []);
 
   const connect = useCallback(async () => {
     const bundler: IBundler = new Bundler({
@@ -73,14 +113,21 @@ function App() {
       </h1>
 
       {!smartAccount && <button onClick={connect}>Login</button>}
+      {!provider && <button onClick={connectAlchemy}>Login Alchemy</button>}
+      {<button onClick={logout}>Logout</button>}
       {loading && <p>Loading account details...</p>}
-      {!!smartAccount && !!provider && (
-        <div className="buttonWrapper">
-          <h3>Smart account address:</h3>
-          <p>{address}</p>
-          <Counter smartAccount={smartAccount} provider={provider} />
-        </div>
-      )}
+      {(!!smartAccount && !!provider) ||
+        (!!alchemyProvider && (
+          <div className="buttonWrapper">
+            <h3>Smart account address:</h3>
+            <p>{address}</p>
+            <Counter
+              smartAccount={smartAccount}
+              provider={provider}
+              alchemyProvider={alchemyProvider}
+            />
+          </div>
+        ))}
     </div>
   );
 }
