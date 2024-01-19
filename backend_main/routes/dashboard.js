@@ -3,11 +3,7 @@ const router = express.Router()
 
 const dashboardControllers = require('../controllers/dashboard')
 
-router.get('/', (req,res)=> {
-  res.send('Backend Running well!!')
-});
-router.get('/searchHours/:entry', dashboardControllers.searchHoursByEntryNumber);
-router.get('/allEvents', dashboardControllers.getAllEvents);
+router.post('/depositAmount', dashboardControllers.depositAmount);
 
 
 module.exports = router

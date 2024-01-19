@@ -6,44 +6,76 @@ const {
   InternalServerError,
 } = require("../errors");
 
+const User = require("../models/user");
+const Transaction = require("../models/Transaction");
 
-const Student = require('../models/studentModel')
-// const Hours = require('../models/hoursModel')
-// const DeletedHours = require('../models/deletedHoursModel')
-// const Counter = require('../models/counter')
-// const Event = require('../models/event')
-// const Grade = require('../models/grades')
-
-
-const searchHoursByEntryNumber = async (req, res) => {
-  try {
-      const student = await Student.findOne({ entry: req.params.entry });
-      if (!student) {
-          return res.status(404).json({ error: 'Student not found' });
-      }
-      res.status(200).json(student);
-  } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
+const depositAmount = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    throw new BadRequestError("Validation failed", errors.array());
   }
-}
-
-const getAllEvents = async (req, res) => {
   try {
-      const events = await Event.find();
-      res.status(200).json(events);
+    const {
+      amount,
+      currencyType,
+      transactionType,
+      transactionStatus,
+      investedInVault1,
+      investedInVault2,
+      investedInVault3,
+    } = req.body;
+    const transaction = new Transaction({
+      amount,
+      currencyType,
+      transactionType,
+      transactionStatus,
+      investedInVault1,
+      investedInVault2,
+      investedInVault3,
+    });
+    await transaction.save();
+    res.status(StatusCodes.CREATED).json({ success: true, msg: "Transaction Success", data : transaction });
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
+    console.log(error);
+    throw new InternalServerError("can't do Transaction, try again later");
   }
-}
+};
 
 
-
-
-
+// not completed yet
+const withdrawAmount = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    throw new BadRequestError("Validation failed", errors.array());
+  }
+  try {
+    const {
+      amount,
+      currencyType,
+      transactionType,
+      transactionStatus,
+      investedInVault1,
+      investedInVault2,
+      investedInVault3,
+    } = req.body;
+    const transaction = new Transaction({
+      amount,
+      currencyType,
+      transactionType,
+      transactionStatus,
+      investedInVault1,
+      investedInVault2,
+      investedInVault3,
+    });
+    await transaction.save();
+    res.status(StatusCodes.CREATED).json({ transaction });
+  } catch (error) {
+    console.log(error);
+    throw new InternalServerError("can't do Transaction, try again later");
+  }
+};
 
 module.exports = {
-  searchHoursByEntryNumber,
-  getAllEvents
+  depositAmount,
+  withdrawAmount,
 };

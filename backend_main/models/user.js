@@ -13,6 +13,12 @@ const userSchema = new Schema({
     default: false,
     required: true
   },
+  transactions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Transaction",
+    },
+  ],
 });
 
 userSchema.plugin(uniqueValidator, {
