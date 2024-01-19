@@ -10,19 +10,27 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@alchemy/aa-accounts": "^2.1.0",
+    "@alchemy/aa-alchemy": "^2.1.0",
+    "@alchemy/aa-core": "^2.0.0",
+    "@alchemy/aa-signers": "^2.0.0",
     "@canvasjs/react-charts": "^1.0.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.5",
     "@mui/material": "^5.15.5",
+    "ethers": "^6.10.0",
     "localforage": "^1.10.0",
+    "magic-sdk": "^21.5.0",
     "match-sorter": "^6.3.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.21.2",
     "react-tiny-popover": "^8.0.4",
-    "sort-by": "^1.2.0"
+    "react-toastify": "^10.0.3",
+    "sort-by": "^1.2.0",
+    "viem": "^2.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
