@@ -75,7 +75,28 @@ const withdrawAmount = async (req, res) => {
   }
 };
 
+const saveAnswer = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    throw new BadRequestError("Validation failed", errors.array());
+  }
+  try {
+    const { answer } = req.body;
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      throw new UnauthenticatedError("User not found");
+    }
+    user.answer = answer;
+    await user.save();
+    res.status(StatusCodes.CREATED).json({ user });
+  } catch (error) {
+    console.log(error);
+    throw new InternalServerError("can't save answer, try again later");
+  }
+}
+
+
 module.exports = {
   depositAmount,
-  withdrawAmount,
+
 };
