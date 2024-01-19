@@ -52,17 +52,17 @@ contract DelegationVault is ERC4626, Ownable {
     event Invested(address indexed owner, uint256 amount);
     event YieldReturned(address indexed owner, uint256 amount);
 
-    constructor(IERC20 _ghoToken) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") Ownable(msg.sender) {
+    constructor(IERC20 _ghoToken) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") Ownable() {
         investmentToken = _ghoToken;
     }
 
     function deposit(uint256 amount, address receiver) public override returns (uint256 shares) {
-        investments[receiver].push(Investment(amount, block.timestamp));
+        userToInvestment[receiver] = Investment(amount, block.timestamp);
         return super.deposit(amount, receiver);
     }
 
     function withdraw(uint256 assets, address receiver, address _owner) public override returns (uint256 shares) {
-        uint256 fee = FeeCalculator.calculateTimeBasedFee(investments[_owner].amount, investments[_owner].depositTime, feeBasisPoints, feeDecreaseInterval);
+        uint256 fee = FeeCalculator.calculateTimeBasedFee(userToInvestment[_owner].amount, userToInvestment[_owner].depositTime, feeBasisPoints, feeDecreaseInterval);
         investmentToken.transfer(owner(), fee); // Assuming protocolFeeReceiver is the fee recipient
         
         // Deduct this fee from the assets being withdrawn
