@@ -11,18 +11,18 @@ function Chart() {
     animationEnabled: true,
     backgroundColor: "#231f36",
     title:{
-      fontColor: "#ffffff",
+      fontColor: "#FAFAFC",
       fontWeight: "lighter",
       text: "Moving Average"
     },
     axisX: {
-      labelFontColor: "#ffffff",
+      labelFontColor: "#FAFAFC",
       valueFormatString: "DD MMM"
       
     },
     axisY: {
       // title: "Sales (in USD)",
-      labelFontColor: "#ffffff",
+      labelFontColor: "#FAFAFC",
       suffix: " %"
     },
     data: [{

@@ -10,7 +10,7 @@ function Home() {
     <>
       <AuthContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
         <ProviderContext.Provider value={[provider, setProvider]}>
-          <Header />
+          {/* <Header /> */}
         </ProviderContext.Provider>
       </AuthContext.Provider>
     </>

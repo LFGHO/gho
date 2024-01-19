@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
-import navlogo from "../../assets/Logo/disney.png";
+import navlogo from "../../assets/Logo/gfo_logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { color } from "../../theme";
 import ButtonGradient from "../ButtonGradient";
@@ -39,26 +39,28 @@ function Navbar() {
         >
           {/* Adding Company name or logo here  */}
           <Typography component="div" sx={{ flexGrow: 1 }}>
-            <img src={navlogo} className="h-20 pl-4"></img>
+            <Link to="/dashboard">
+              <img src={navlogo} className="h-20 pl-4"></img>
+            </Link>
           </Typography>
 
           {/* Navigation for laptop */}
           <Stack direction="row" spacing={0.5} className="">
-            <NavLink to="/" className="flex">
+            <Link to="/portfolio" className="flex">
               <Button
                 color="inherit"
                 sx={{ display: { xs: "none", lg: "block" } }}
               >
-                Home{" "}
+                Portfolio{" "}
               </Button>
-            </NavLink>
+            </Link>
 
-            <Link to="/coming-soon" className="flex">
+            <Link to="/credit-option" className="flex">
               <Button
                 color="inherit"
                 sx={{ display: { xs: "none", lg: "block" } }}
               >
-                About{" "}
+                Credit Delegation{" "}
               </Button>
             </Link>
 
@@ -67,34 +69,7 @@ function Navbar() {
                 color="inherit"
                 sx={{ display: { xs: "none", lg: "block" } }}
               >
-                News{" "}
-              </Button>
-            </Link>
-
-            <Link to="/coming-soon" className="flex">
-              <Button
-                color="inherit"
-                sx={{ display: { xs: "none", lg: "block" } }}
-              >
-                Testimonials{" "}
-              </Button>
-            </Link>
-
-            <Link to="/coming-soon" className="flex">
-              <Button
-                color="inherit"
-                sx={{ display: { xs: "none", lg: "block" } }}
-              >
-                FAQ{" "}
-              </Button>
-            </Link>
-
-            <Link to="/coming-soon" className="flex">
-              <Button
-                color="inherit"
-                sx={{ display: { xs: "none", lg: "block" } }}
-              >
-                Contact
+                Cross Chain Payments
               </Button>
             </Link>
 
@@ -102,7 +77,10 @@ function Navbar() {
               color="inherit"
               sx={{ display: { xs: "none", lg: "block" } }}
             >
-              <NormalButton text="Cross-chain payments"></NormalButton>
+              <NormalButton
+                navigate="/vault-options"
+                text="Vaults"
+              ></NormalButton>
             </Button>
 
             <Button
@@ -152,44 +130,29 @@ function Navbar() {
               }}
               className="flex flex-col justify-center items-center"
             >
-              <Link to="/">
+              <Link to="/portfolio">
                 <Button color="inherit" onClick={closeDrawer}>
-                  Home{" "}
+                  Portfolio{" "}
+                </Button>
+              </Link>
+
+              <Link to="/credit-option">
+                <Button color="inherit" onClick={closeDrawer}>
+                  Credit Delegation{" "}
                 </Button>
               </Link>
 
               <Link to="/coming-soon">
                 <Button color="inherit" onClick={closeDrawer}>
-                  About{" "}
-                </Button>
-              </Link>
-
-              <Link to="/coming-soon">
-                <Button color="inherit" onClick={closeDrawer}>
-                  News{" "}
-                </Button>
-              </Link>
-
-              <Link to="/coming-soon">
-                <Button color="inherit" onClick={closeDrawer}>
-                  Testimonials{" "}
-                </Button>
-              </Link>
-
-              <Link to="/coming-soon">
-                <Button color="inherit" onClick={closeDrawer}>
-                  FAQ{" "}
-                </Button>
-              </Link>
-
-              <Link to="/coming-soon">
-                <Button color="inherit" onClick={closeDrawer}>
-                  Contact{" "}
+                  Cross Chain Payments{" "}
                 </Button>
               </Link>
 
               <Button color="inherit" onClick={closeDrawer}>
-                <NormalButton text="Cross-chain Payment"></NormalButton>
+                <NormalButton
+                  navigate="/vault-options"
+                  text="Vaults"
+                ></NormalButton>
               </Button>
 
               {/* <div

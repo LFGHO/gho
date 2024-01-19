@@ -5,7 +5,13 @@
 
 :root {
   /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
-  color: #FAFAFC;
+  /* color: #FAFAFC; */
   background-color: #1A1A23;
+}
+
+@font-face {
+  font-family: "Hinglish";   /*Can be any text*/
+  src: local("SAMAN___"),
+    url("./fonts/SAMAN___.ttf") format("truetype");
 }
 

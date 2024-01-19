@@ -3,10 +3,11 @@ import TextWithHint from "../../components/TextWithHint";
 import ButtonGradient from "../../components/ButtonGradient";
 import Button from "../../components/Button";
 import Chart from "./Chart";
+import {color} from "../../theme";
 
 function ProtfolioCard() {
   return (
-    <div className="bg-[#231f36] mx-5 md:mx-8 py-5 rounded-3xl grid grid-cols-12 gap-4">
+    <div className="mx-5 md:mx-8 py-5 mb-5 rounded-3xl grid grid-cols-12 gap-4" style={{backgroundColor: color.highlightbg}}>
       <div className="col-span-12 md:col-span-4 grid grid-cols-4 gap-y-6">
         <div className="flex flex-col  justify-center items-center col-span-2">
           <TextWithHint text="Net Value" hint="Net Value in the assets" />
