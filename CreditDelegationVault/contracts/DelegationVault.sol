@@ -15,22 +15,12 @@ library FeeCalculator {
     }
 }
 
-interface IUniswapV2Router {
-    function swapExactTokensForTokens(
-        uint amountIn,
-        uint amountOutMin,
-        address[] calldata path,
-        address to,
-        uint deadline
-    ) external returns (uint[] memory amounts);
-}
-
-contract GHOVault is ERC4626, Ownable {
-    uint256 public feeBasisPoints = 100; // 1%
-    uint256 public feeDecreaseInterval = 90 days; // 
+//* User can only invest in GHO
+contract DelegationVault is ERC4626, Ownable {
+    uint256 public feeBasisPoints = 500; // 5% High Fee due to high risk and high yield
+    uint256 public feeDecreaseInterval = 1 days; // 
 
     IERC20 public investmentToken; // GHO Token
-    IUniswapV2Router public dexRouter; // Uniswap V2 Router
     
     uint256 private investedAmount; // Variable to track the amount withdrawn for investment
 
@@ -45,9 +35,8 @@ contract GHOVault is ERC4626, Ownable {
     event Invested(address indexed owner, uint256 amount);
     event YieldReturned(address indexed owner, uint256 amount);
 
-    constructor(IERC20 _ghoToken, IUniswapV2Router _dexRouter) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") Ownable(msg.sender) {
+    constructor(IERC20 _ghoToken) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") Ownable(msg.sender) {
         investmentToken = _ghoToken;
-        dexRouter = _dexRouter;
     }
 
     function deposit(uint256 amount, address receiver) public override returns (uint256 shares) {
@@ -65,38 +54,6 @@ contract GHOVault is ERC4626, Ownable {
         investmentToken.transfer(owner(), totalFee); // Assuming protocolFeeReceiver is the fee recipient
         // Rest of the withdraw logic
         return super.withdraw(assets, receiver, _owner);
-    }
-
-    function depositAndConvert(address tokenAddress, uint256 amount) public {
-        require(tokenAddress != address(investmentToken), "GHO deposit not allowed");
-
-        IERC20 token = IERC20(tokenAddress);
-        require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
-
-        uint256 balanceBeforeSwap = investmentToken.balanceOf(address(this));
-        
-        // Approve the DEX to spend the token
-        token.approve(address(dexRouter), amount);
-
-        // Define the swap path (token -> GHO)
-        address[] memory path = new address[](2);
-        path[0] = tokenAddress;
-        path[1] = address(investmentToken);
-
-        // Execute the swap (setting amountOutMin to 0 for simplicity, but should be calculated properly)
-        dexRouter.swapExactTokensForTokens(
-            amount,
-            0, // Ideally, set this to a reasonable amount to mitigate slippage
-            path,
-            address(this),
-            block.timestamp + 300 // 5 minutes deadline
-        );
-
-        uint256 balanceAfterSwap = investmentToken.balanceOf(address(this));
-        uint256 amountGHO = balanceAfterSwap - balanceBeforeSwap;
-
-        // Mint vault shares to the depositor based on the amount of GHO received
-        _mint(msg.sender, amountGHO);
     }
 
     // Function for the owner to withdraw funds for investment
