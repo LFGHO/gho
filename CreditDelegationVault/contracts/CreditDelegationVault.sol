@@ -94,9 +94,9 @@ contract CreditDelegationVault is ERC4626, Ownable {
 }
 
 /*
-The feeDecreaseInterval variable in the GHOVault contract represents the time interval after which the fee percentage will decrease. Let's break down its purpose and how it works:
+The feeDecreaseInterval variable in the CreditDelegationVault contract represents the time interval after which the fee percentage will decrease. Let's break down its purpose and how it works:
 
-Purpose: The purpose of the feeDecreaseInterval is to gradually decrease the fee percentage charged by the GHOVault contract over time. By decreasing the fee percentage, the contract aims to incentivize long-term investments and provide more favorable terms for investors.
+Purpose: The purpose of the feeDecreaseInterval is to gradually decrease the fee percentage charged by the CreditDelegationVault contract over time. By decreasing the fee percentage, the contract aims to incentivize long-term investments and provide more favorable terms for investors.
 
 How it works: The feeDecreaseInterval is set to a specific duration, which in this case is 1 days. This means that every 1 day, the fee percentage will decrease.
 
@@ -105,9 +105,9 @@ Here's a high-level overview of how it works:
 Initially, the feeBasisPoints variable is set to a certain value, representing the fee percentage (e.g., 100 basis points = 1%).
 After every 1 day, the contract will trigger a mechanism to decrease the fee percentage.
 The specific mechanism for decreasing the fee percentage is not provided in the code excerpt you shared. It could involve a calculation based on the current fee percentage or follow a predefined schedule.
-The decreased fee percentage will then be applied to future transactions or operations within the GHOVault contract.
+The decreased fee percentage will then be applied to future transactions or operations within the CreditDelegationVault contract.
 It's important to note that the exact implementation of the fee decrease mechanism is not visible in the provided code excerpt. You would need to examine the rest of the contract code or any related functions to understand the specific logic behind the fee decrease process.
 
-Overall, the feeDecreaseInterval variable allows the GHOVault contract to gradually reduce the fee percentage over time, providing potential benefits to investors and encouraging long-term participation in the investment platform.
+Overall, the feeDecreaseInterval variable allows the CreditDelegationVault contract to gradually reduce the fee percentage over time, providing potential benefits to investors and encouraging long-term participation in the investment platform.
 
 */
