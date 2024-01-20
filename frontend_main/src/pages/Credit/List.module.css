@@ -1,0 +1,35 @@
+
+/* Filename - App.css*/
+.borrowings {
+  width: 100%;
+  /* height: 100vh; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+
+table {
+  /* border: 2px solid red; */
+  /* border-left: 1px solid #8349b9;
+  border-right: 1px solid #8349b9; */
+  margin: 30px 40px;
+  width: 100%;
+  height: 100%;
+  /* overflow:scroll; */
+}
+
+th {
+  background-color: #483a8d;
+  padding: 8px 0px;
+}
+
+td {
+  padding: 8px 0px;
+  border-bottom: 1px solid #8349b9;
+  text-align: center;
+}
+tr:hover {
+  border-radius: 30px;
+  background-color: #231f36;
+}

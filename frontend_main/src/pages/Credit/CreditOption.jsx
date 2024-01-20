@@ -37,7 +37,7 @@ function CreditOption() {
           </div>
           <div className="md:col-start-3 flex justify-center">
             <Link
-              to="/auth/login/user"
+              to="/lending-list"
               className=" flex flex-col  justify-center items-center w-64 md:w-72  h-60 md:h-72 rounded-xl my-3"
               style={{ backgroundColor: color.highlightbg }}
             >

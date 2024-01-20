@@ -13,7 +13,7 @@ import WithNav from "./WithNav";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import "./fonts/SAMAN___.ttf";
 import CreditOption from "./pages/Credit/CreditOption";
-import BorrowingList from "./pages/Credit/Borrowings/BorrowingList";
+import List from "./pages/Credit/List";
 
 const router = createBrowserRouter([
   {
@@ -52,7 +52,11 @@ const router = createBrowserRouter([
           },
           {
             path: "/borrowing-list",
-            element: <BorrowingList />,
+            element: <List mode="borrow"/>,
+          },
+          {
+            path: "/lending-list",
+            element: <List mode="lend"/>,
           },
         ],
       },
