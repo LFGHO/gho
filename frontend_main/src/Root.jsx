@@ -9,7 +9,6 @@ function Root() {
     <div style={{ color: color.text, backgroundColor: color.background }}>
    
             <Outlet />
-      {/* <Home/> */}
     </div>
   );
 }
