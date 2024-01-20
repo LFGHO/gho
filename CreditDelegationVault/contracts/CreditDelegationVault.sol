@@ -34,13 +34,19 @@ library FeeCalculator {
     }
 }
 
-//* User can only invest in GHO
+library YieldCalculator {
+    function CalculateUserYield()
+}
+
+//* User can only invest in GHO; Gives back all the assets and empties vault every 24 hours
 contract CreditDelegationVault is ERC4626, Ownable {
     uint256 public feeBasisPoints = 600; // 5% High Fee due to high risk and high yield
     uint256 public feeDecreaseInterval = 1 days; // Intraday Trading
 
     IERC20 public investmentToken; // GHO Token
     uint256 private investedAmount; // Variable to track the amount withdrawn for investment
+
+    uint256 public originalAmountInvested;
 
     struct Investment {
         uint256 amount;
@@ -54,24 +60,36 @@ contract CreditDelegationVault is ERC4626, Ownable {
 
     constructor(IERC20 _ghoToken) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") Ownable(msg.sender) {
         investmentToken = _ghoToken;
+        originalAmountInvested = 0;
     }
 
-    function depositWithPermit(uint256 assets, address receiver, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public {
+    function getTotalEarnings() return (uint256) {
+        return totalAssets() - originalAmountInvested;
+    }
+
+    function depositWithPermit(uint256 assets, address receiver, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public onlyOwner {
         IERC20Permit(address(investmentToken)).permit(msg.sender, address(this), assets, deadline, v, r, s);
         require(IERC20(investmentToken).transferFrom(msg.sender, address(this), assets), "Transfer failed");
 
         userToInvestment[receiver] = Investment(assets, block.timestamp);
-        // set default interest rate of 2%, but first check if the user has already deposited before
+        originalAmountInvested += assets;
+
         emit Invested(receiver, assets);
     }
 
-    function deposit(uint256 amount, address receiver) public override returns (uint256 shares) {
+    function deposit(uint256 amount, address receiver) public override onlyOwner returns (uint256 shares) {
         userToInvestment[receiver] = Investment(amount, block.timestamp);
+        originalAmountInvested += assets;
+
         return super.deposit(amount, receiver);
     }
 
-    function withdraw(uint256 assets, address receiver, address _owner) public override returns (uint256 shares) {
+    // Only the owner can withdraw funds (and then manually send back the earnings back to users)
+    function withdraw(uint256 assets, address receiver, address _owner) public override onlyOwner returns (uint256 shares) {
         uint256 fee = FeeCalculator.calculateTimeBasedFee(userToInvestment[_owner].amount, userToInvestment[_owner].depositTime, feeBasisPoints, feeDecreaseInterval);
+        
+        
+
         investmentToken.transfer(owner(), fee); // Assuming protocolFeeReceiver is the fee recipient
         
         // Deduct this fee from the assets being withdrawn
