@@ -56,6 +56,15 @@ contract CreditDelegationVault is ERC4626, Ownable {
         investmentToken = _ghoToken;
     }
 
+    function depositWithPermit(uint256 assets, address receiver, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public {
+        IERC20Permit(address(investmentToken)).permit(msg.sender, address(this), assets, deadline, v, r, s);
+        require(IERC20(investmentToken).transferFrom(msg.sender, address(this), assets), "Transfer failed");
+
+        userToInvestment[receiver] = Investment(assets, block.timestamp);
+        // set default interest rate of 2%, but first check if the user has already deposited before
+        emit Invested(receiver, assets);
+    }
+
     function deposit(uint256 amount, address receiver) public override returns (uint256 shares) {
         userToInvestment[receiver] = Investment(amount, block.timestamp);
         return super.deposit(amount, receiver);
