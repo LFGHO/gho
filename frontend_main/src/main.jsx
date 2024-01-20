@@ -13,6 +13,23 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import "./fonts/SAMAN___.ttf";
 import CreditOption from "./pages/Credit/CreditOption";
 import List from "./pages/Credit/List";
+import {
+  ThirdwebProvider,
+  ConnectWallet,
+  metamaskWallet,
+  coinbaseWallet,
+  smartWallet,
+  walletConnect,
+  localWallet,
+  embeddedWallet,
+} from "@thirdweb-dev/react";
+import { LocalWallet, SmartWallet } from "@thirdweb-dev/wallets";
+import {Sepolia} from "@thirdweb-dev/chains"
+
+const smartWalletOptions = {
+  factoryAddress: "0x9d0a83c7a52bc028cf953af40836ff2e4d65980d",
+  gasless: true,
+};
 
 const router = createBrowserRouter([
   {
@@ -69,6 +86,44 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThirdwebProvider
+      activeChain={Sepolia}
+      clientId="Y8d61c74e-effb-4a49-9c29-6b88005758e1"
+      // locale={en()}
+      supportedWallets={[
+        smartWallet(
+          metamaskWallet(),
+          smartWalletOptions,
+        ),
+        smartWallet(
+          coinbaseWallet({ recommended: true }),
+          smartWalletOptions,
+        ),
+        smartWallet(
+          walletConnect(),
+          smartWalletOptions,
+        ),
+        smartWallet(
+          localWallet(),
+          smartWalletOptions,
+        ),
+        smartWallet(
+          embeddedWallet({
+            auth: {
+              options: [
+                "email",
+                "google",
+                "apple",
+                "facebook",
+              ],
+            },
+          }),
+          smartWalletOptions,
+        ),
+      //  metamaskWallet()
+      ]}
+    >
+      <RouterProvider router={router} />
+    </ThirdwebProvider>
   </React.StrictMode>
 );
