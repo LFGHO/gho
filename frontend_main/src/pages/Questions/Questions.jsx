@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../../components/Button";
 import ButtonGradient from "../../components/ButtonGradient";
 
@@ -55,6 +55,9 @@ const question = [
 ];
 
 function Questions() {
+
+  const location = useLocation();
+  const address = location.state;
   const navigate = useNavigate();
   const [currQuesIndex, setCurrQuesIndex] = useState(0);
   const [optionAnswer, setOptionAnswer] = useState([]);
@@ -80,10 +83,29 @@ function Questions() {
     }
   };
 
-  const saveData = () => { 
+  const saveData = async() => { 
     const finalAnswer = [...optionAnswer, textAnswer];
-    console.log(finalAnswer);
-    navigate("/vault-options");
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/dashboard/saveAnswer`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ address: address, answer : finalAnswer }),
+        }
+      );
+      const json = await response.json();
+      console.log(json);
+      if (!response.ok) {
+        toast.error(json.msg);
+      } else {
+        navigate("/deposit-page",{state: finalAnswer})
+      }
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   return (

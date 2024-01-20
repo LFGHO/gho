@@ -1,0 +1,202 @@
+
+body{
+    box-sizing: border-box;
+    padding:0px;
+}
+
+.Login-user-container{
+    display:flex;
+    height:100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+#login-Heading{
+    color: #fafafc;
+    font-size: 34px;
+    font-weight: 545;
+    margin-bottom:60px;
+   
+
+}
+
+.Login-Form{
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex:62%;
+    padding-top:50px;
+    padding-bottom:50px;
+    
+}
+
+/*this need to be updated when you change the image {only height and width}*/
+
+.Login-image{
+    height:50%;
+    width:60%;
+    margin-top:200px;
+    margin-bottom:200px;
+    margin-left:110px;
+    margin-right:110px;
+}
+
+.Login-Recuiter-image-container{
+     background-color: #231f36;
+     flex:38%;
+     display:flex;
+     justify-content: center;
+     align-items: center;
+     margin:0px;
+     height:100%;
+}
+
+
+
+
+#Forgot-Password{
+    color:#f1f2f2;
+    font-weight:470;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    font-size:17px;
+    margin-top:5px;
+    margin-bottom:30px;
+    margin-right:10px;
+    
+}
+
+.Forgot-password-container{
+    width:66%;
+    height:3%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom:35px;
+}
+
+
+
+
+
+@media only screen and (max-width: 992px) {
+    .Login-Recuiter-image-container{
+        display:none;
+   }
+
+   .Login-Form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+   }
+   
+   .Login-user-container{
+    display:flex;
+    height:100vh;
+    justify-content: center;
+    align-items: center;
+    width: 94%;
+    max-width: 1110px;
+    margin: auto;
+}
+
+
+
+.Forgot-password-container{
+    width:90%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#login-Heading{
+    color:#F1F2F2;
+    font-size: 24px;
+    font-weight: 470;
+    margin-bottom:40px;
+
+}
+
+#Forgot-Password{
+    color:#f1f2f2;
+    font-weight:430;
+    text-decoration: underline;
+    font-size:12px;
+    margin-top:7px;
+    margin-bottom:0px;
+   
+}
+  }
+
+  @media screen and (min-width:700px) and (max-width:992px){
+    .Forgot-password-container{
+        width:73%;
+        }
+
+    }
+
+
+@media screen and (max-width:420px){
+    .Forgot-password-container{
+        width:97%;
+        
+        }
+        #Forgot-Password{
+            color:#f1f2f2;
+            font-weight:430;
+            text-decoration: underline;
+            font-size:12px;
+            margin-top:7px;
+            margin-bottom:0px;
+           
+        }
+        
+#login-Heading{
+
+    font-size: 22px;
+    font-weight: 470;
+
+
+}
+
+}
+
+@media screen and (min-width:992px) and (max-width:1024px){
+
+
+
+#login-Heading{
+    color:#F1F2F2;
+    font-size: 33px;
+    font-weight: 500;
+    margin-bottom:40px;
+
+}
+.Forgot-password-container{
+    height:5%;
+    }
+    
+#Forgot-Password{
+    color:#f1f2f2;
+    font-weight:499;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 1px;
+    font-size:14px;
+    margin-top:5px;
+    margin-bottom:30px;
+    margin-right:10px;
+    
+}
+
+}
+
+
+  
+
+  

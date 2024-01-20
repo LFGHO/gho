@@ -4,15 +4,8 @@ const uniqueValidator = require("mongoose-unique-validator");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  hash: { type: String, required: true },
-  salt: { type: String, required: true },
-  hasEmailVerified: {
-    type: Boolean,
-    default: false,
-    required: true
-  },
+  address: { type: String, required: true },
+  answer: [],
   transactions: [
     {
       type: mongoose.Schema.Types.ObjectId,

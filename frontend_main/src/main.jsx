@@ -26,6 +26,8 @@ import {
 import { LocalWallet, SmartWallet } from "@thirdweb-dev/wallets";
 import {Sepolia} from "@thirdweb-dev/chains"
 import Login from "./pages/Auth/Login";
+import DepositPage from "./pages/Vault/DepositPage";
+import CreditForm from "./pages/Credit/CreditForm";
 
 const smartWalletOptions = {
   factoryAddress: "0x9d0a83c7a52bc028cf953af40836ff2e4d65980d",
@@ -52,8 +54,16 @@ const router = createBrowserRouter([
         element: <VaultOptions />,
       },
       {
+        path: "/deposit-page",
+        element: <DepositPage />,
+      },
+      {
         path: "/credit-option",
         element: <CreditOption />,
+      },
+      {
+        path: "/credit-form",
+        element: <CreditForm />,
       },
       {
         path: "/login",

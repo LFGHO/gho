@@ -1,5 +1,6 @@
 import React from "react";
 import { color } from "../../theme";
+import { useNavigate } from "react-router-dom";
 import styles from "./List.module.css";
 import Button from "../../components/Button";
 import ActionButton from "../../components/ActionButton";
@@ -9,19 +10,30 @@ import { lend_data} from "./data/Lend";
 
 function List({mode}) {
 
+  const navigate = useNavigate();
+
   let data;
   if (mode === "borrow") {
     data = borrow_data;
   } else {
     data = lend_data;
   }
+
+
+  const goToCreditForm = (mode) => {
+    if (mode === "borrow") {
+      navigate("/credit-form", {state: "Borrow Someone"});
+    } else {
+      navigate("/credit-form", {state: "Lend Someone"});
+    }
+  };
   return (
     <>
       <div className="mt-8 flex justify-end">
-        <div className="mr-4">
+        <div className="mr-4" onClick={() => goToCreditForm("borrow")}>
           <ActionButton text="Borrow Someone" />
         </div>
-        <div className="mr-12">
+        <div className="mr-12 " onClick={() => goToCreditForm("lend")}>
           <ActionButton text="Lend Someone" />
         </div>
       </div>
