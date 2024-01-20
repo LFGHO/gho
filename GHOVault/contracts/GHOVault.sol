@@ -64,6 +64,10 @@ contract GHOVault is ERC4626, Ownable {
         PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
     }
 
+    function setUserToInvestmentRate(address user, uint256 interestRate) public onlyOwner {
+        userToInterestRate[user] = interestRate;
+    }
+
     function splitSignature(bytes32 signature) private pure returns (uint8 v, bytes32 r, bytes32 s) {
         require(signature.length == 65, "Invalid signature length");
 
@@ -109,7 +113,6 @@ contract GHOVault is ERC4626, Ownable {
         }
         return super.deposit(amount, receiver);
     }
-
 
     function depositWithPermit(uint256 assets, address receiver, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public {
         IERC20Permit(address(investmentToken)).permit(msg.sender, address(this), assets, deadline, v, r, s);
