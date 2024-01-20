@@ -2,14 +2,15 @@ import dotenv from 'dotenv';
 import { stringToHex, createPublicClient, createWalletClient, http, encodeAbiParameters, parseAbiParameters } from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
 import {sepolia} from 'viem/chains';
-import {abi, bytecode} from './StableDebtToken';
+import {abi, bytecode} from './VariableDebtToken';
 
 import {getRSV} from "./delegateWithSig";
 
 dotenv.config();
 
 // Initialize Account
-const account = privateKeyToAccount(`0x${process.env.PRIVATE_KEY}`);
+// const account = privateKeyToAccount(`0x${process.env.PRIVATE_KEY}`);
+const account = privateKeyToAccount("0xf18aa51574da755c50695e891c424501a8590b34261df4994fc34d685a1b85c0")
 
 // Initialize Client
 const walletClient = createWalletClient({
@@ -95,22 +96,22 @@ export async function delegationWithSig(
     ) {
     const { r, s, v } = getRSV(signedMessage);
  
-    const rbyte = stringToHex(
-        r,
-        { size: 32 }
-    )
-    const sbyte = stringToHex(
-        s,
-        { size: 32 }
-    )
-    // const arr = new Uint8Array(v);
+    // const rbyte = stringToHex(
+    //     r,
+    //     { size: 32 }
+    // )
+    // const sbyte = stringToHex(
+    //     s,
+    //     { size: 32 }
+    // )
+    const arr = new Uint8Array(v);
 
     console.log("\nInsidedelegationWithSig(), calling with writeContract now\n")
     const delegationWithSigHash = await walletClient.writeContract({
         address: (`0x${process.env.STABLE_DEBT_TOKEN_ADDRESS}`),
         abi: abi,
         functionName: "delegationWithSig",
-        args: [`0x${delegator}`, `0x${delegatee}`, value, deadline, r, rbyte, sbyte],
+        args: [`0x${delegator}`, `0x${delegatee}`, value, deadline, arr[0], stringToHex(r), stringToHex(s)],
     });
 
     await publicClient.waitForTransactionReceipt({ hash: delegationWithSigHash })

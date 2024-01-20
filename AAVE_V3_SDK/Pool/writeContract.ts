@@ -24,11 +24,11 @@ const publicClient = createPublicClient({
 
 // WriteContract Functions
 
-export async function approve(_address: string, amount: string) {
+export async function borrow(_address: string, amount: string) {
     const approveHash = await walletClient.writeContract({
         address: (`0x${process.env.STABLE_DEBT_TOKEN_ADDRESS}`),
         abi: abi,
-        functionName: "approve",
+        functionName: "borrow",
         args: [_address, BigInt(amount)],
     });
     
