@@ -25,6 +25,7 @@ import {
 } from "@thirdweb-dev/react";
 import { LocalWallet, SmartWallet } from "@thirdweb-dev/wallets";
 import {Sepolia} from "@thirdweb-dev/chains"
+import Login from "./pages/Auth/Login";
 
 const smartWalletOptions = {
   factoryAddress: "0x9d0a83c7a52bc028cf953af40836ff2e4d65980d",
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/credit-option",
         element: <CreditOption />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/",

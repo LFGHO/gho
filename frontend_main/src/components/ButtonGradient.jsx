@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ButtonGradient({text , navigate}) {
+function ButtonGradient({text , children, navigate}) {
   return (
     <Link to={navigate}>
     <div
@@ -10,7 +10,7 @@ function ButtonGradient({text , navigate}) {
       }}
       className="text-white font-bold py-2 px-4 rounded-3xl border-2 border-[#8349b9] w-full text-center"
     >
-      {text}
+      {text || children}
     </div>
     </Link>
   );

@@ -12,6 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import navlogo from "../../assets/Logo/gfo_logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { ConnectWallet, useAddress, useShowConnectEmbed } from "@thirdweb-dev/react";
 import { color } from "../../theme";
 import ButtonGradient from "../ButtonGradient";
 import NormalButton from "../Button";
@@ -25,9 +26,22 @@ function Navbar() {
   }
 
   const navigate = useNavigate();
+  const address = useAddress();
+  const fisrtThreeLetters = address ? address.slice(0, 3) : "";
+  const lastThreeLetters = address ? address.slice(-3) : "";
+  const trimedAddress = fisrtThreeLetters + "..." + lastThreeLetters;
+
+
   function navigateToSignup() {
     setIsDrawerOpen(false);
-    navigate("/auth/signup");
+    navigate("/", { replace: true });
+  }
+
+  const loginOptional = false;
+  const showConnectEmbed = useShowConnectEmbed(loginOptional);
+  
+  if (showConnectEmbed) {
+    navigate("/", { replace: true });
   }
 
   return (
@@ -83,13 +97,21 @@ function Navbar() {
               ></NormalButton>
             </Button>
 
-            <Button
+            <div
               color="inherit"
-              sx={{ display: { xs: "none", lg: "block" } }}
-              onClick={navigateToSignup}
+              className="lg:flex items-center hidden"
             >
-              <ButtonGradient text="Connect Wallet"></ButtonGradient>
-            </Button>
+              
+              <ConnectWallet
+                detailsBtn={() => {
+                  return (
+                    <ButtonGradient >{trimedAddress}</ButtonGradient>
+                  );
+                }}
+              />
+            </div>
+
+            
 
             {/* Hamburger Icon  */}
             <IconButton
@@ -162,9 +184,16 @@ function Navbar() {
                 <ButtonGradient text="Connect wallet"></ButtonGradient>
               </div> */}
 
-              <Button color="inherit" onClick={closeDrawer}>
-                <ButtonGradient text="Connect wallet"></ButtonGradient>
+              <Button color="inherit">
+              <ConnectWallet
+                detailsBtn={() => {
+                  return (
+                    <ButtonGradient >{trimedAddress}</ButtonGradient>
+                  );
+                }}
+              />
               </Button>
+              
             </Stack>
           </Drawer>
         </Toolbar>

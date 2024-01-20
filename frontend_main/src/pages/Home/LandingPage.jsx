@@ -3,9 +3,10 @@ import gfo_logo from "../../assets/Logo/gfo_logo.png";
 import { color } from "../../theme";
 import Button from "../../components/Button";
 import LaunchButton from "../../components/LaunchButton";
-import {ConnectWallet} from "@thirdweb-dev/react";
+
 
 function LandingPage() {
+
   return (
     <div
       className={`w-full h-screen flex flex-col justify-center items-center`}
@@ -26,11 +27,7 @@ function LandingPage() {
         GHOvardhan
       </p>
       <div className="font-bold text-5xl">
-        <ConnectWallet
-          theme={"dark"}
-          modalSize={"wide"}
-        />
-        <LaunchButton text={"LAUNCH APP"} navigate="/dashboard" />
+        <LaunchButton text="LAUNCH APP" navigate="/login" />
       </div>
     </div>
   );

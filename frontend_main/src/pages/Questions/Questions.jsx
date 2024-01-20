@@ -6,6 +6,7 @@ import ButtonGradient from "../../components/ButtonGradient";
 const question = [
   {
     question: "For How long You Usually Invest?",
+    type: "radio",
     options: [
       {
         option: "1-3 Years",
@@ -27,6 +28,7 @@ const question = [
   },
   {
     question: "What is your risk tolerance?",
+    type: "radio",
     options: [
       {
         option: "Low",
@@ -47,48 +49,41 @@ const question = [
     ],
   },
   {
-    question: "What is your risk tolerance dupli?",
-    options: [
-      {
-        option: "Low",
-        value: "Low",
-      },
-      {
-        option: "Medium",
-        value: "Medium",
-      },
-      {
-        option: "High",
-        value: "High",
-      },
-      {
-        option: "Very High",
-        value: "Very High",
-      },
-    ],
+    question: "Describe Your Startegy of Investments?",
+    type: "input",
   },
 ];
 
 function Questions() {
   const navigate = useNavigate();
   const [currQuesIndex, setCurrQuesIndex] = useState(0);
-  const [answers, setAnswers] = useState([]);
+  const [optionAnswer, setOptionAnswer] = useState([]);
+  const [textAnswer, setTextAnswer] = useState("");
+
+
   const doNext = (ans) => {
     if (currQuesIndex < question.length - 1) {
       setCurrQuesIndex(currQuesIndex + 1);
-      console.log(ans);
-      setAnswers([...answers, ans]);
+      setOptionAnswer([...optionAnswer, ans]);
     } else if (currQuesIndex === question.length - 1) {
-      if(answers.length != question.length){
-      console.log(ans);
-      setAnswers([...answers, ans]);
+      if (optionAnswer.length != question.length) {
+        setOptionAnswer([...optionAnswer, ans]);
       }
     }
   };
 
-  const goToProtfolio = () => {
-    console.log(answers);
-    navigate("/portfolio");
+  const handleTextChange = (ans) => {
+    if (ans.length <= 250){
+      setTextAnswer(ans);
+    }else{
+      return;
+    }
+  };
+
+  const saveData = () => { 
+    const finalAnswer = [...optionAnswer, textAnswer];
+    console.log(finalAnswer);
+    navigate("/vault-options");
   };
 
   return (
@@ -100,21 +95,38 @@ function Questions() {
         <p className="text-lg font-semibold text-[#d9d7e0]">
           {question[currQuesIndex].question}
         </p>
-        <div className="flex flex-col justify-center items-center">
-          {question[currQuesIndex].options.map((choice) => (
-            <div
-              className="flex justify-center items-center my-2 w-full py-2 rounded-xl bg-[#332566] border border-[#6c4ed9] cursor-pointer"
-              onClick={() => doNext(choice.option)}
-            >
-              <p className="text-lg font-semibold text-[#d9d7e0] ml-2 ">
-                {choice.option}
-              </p>
-            </div>
-          ))}
-        </div>
+        {question[currQuesIndex].type === "input" ? (
+          <>
+          <div className="flex justify-center items-center my-2 w-full py-2 rounded-xl bg-[#332566] border border-[#6c4ed9] cursor-pointer">
+            <textarea
+              rows={5}
+              cols={50}
+              value={textAnswer}
+              onChange={(e) => handleTextChange(e.target.value)}
+              placeholder="Write in 250 Characters...."
+              className="text-sm font-semibold text-[#d9d7e0] ml-2 w-full bg-transparent outline-none"
+            />
+            
+          </div>
+          <p className="text-xs text-center mb-3">{250 - textAnswer.length} Character's left</p>
+          </>
+        ) : (
+          <div className="flex flex-col justify-center items-center">
+            {question[currQuesIndex].options.map((choice) => (
+              <div
+                className="flex justify-center items-center my-2 w-full py-2 rounded-xl bg-[#332566] border border-[#6c4ed9] cursor-pointer"
+                onClick={() => doNext(choice.option)}
+              >
+                <p className="text-lg font-semibold text-[#d9d7e0] ml-2 ">
+                  {choice.option}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
 
-        {answers.length === question.length && (
-          <div onClick={goToProtfolio} className="mt-2">
+        {currQuesIndex == question.length-1 && (
+          <div onClick={saveData} className="mt-2">
             <ButtonGradient text="Finish" />
           </div>
         )}
