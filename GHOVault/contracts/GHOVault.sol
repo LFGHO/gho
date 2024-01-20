@@ -26,6 +26,10 @@ interface IUniswapV2Router {
 }
 
 contract GHOVault is ERC4626, Ownable {
+    bytes32 public immutable  PERMIT_TYPEHASH;
+    bytes32 private immutable DOMAIN_SEPARATOR;
+    mapping(address => uint256) private nonces;
+
     uint256 public feeBasisPoints = 100; // 1%
     uint256 public feeDecreaseInterval = 90 days; // 
 
@@ -39,7 +43,7 @@ contract GHOVault is ERC4626, Ownable {
         uint256 depositTime;
     }
     mapping(address => Investment[]) private investments;
-
+    mapping(address => uint256) private userToInterestRate; // Interest rate is in basispoints
 
     // Event declarations
     event Invested(address indexed owner, uint256 amount);
@@ -48,12 +52,77 @@ contract GHOVault is ERC4626, Ownable {
     constructor(IERC20 _ghoToken, IUniswapV2Router _dexRouter) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") Ownable(msg.sender) {
         investmentToken = _ghoToken;
         dexRouter = _dexRouter;
+
+        DOMAIN_SEPARATOR = keccak256(abi.encode(
+            keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
+            keccak256(bytes("GHOVault")),
+            keccak256(bytes("1")),
+            block.chainid,
+            address(this)
+        ));
+
+        PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
+    }
+
+    function splitSignature(bytes32 signature) private pure returns (uint8 v, bytes32 r, bytes32 s) {
+        require(signature.length == 65, "Invalid signature length");
+
+        assembly {
+            // First 32 bytes stores the length of the signature
+            r := mload(add(signature, 32))
+            // Second 32 bytes stores the length of the signature
+            s := mload(add(signature, 64))
+            // The last byte stores the sign identifier (0 or 1)
+            v := byte(0, mload(add(signature, 96)))
+        }
+
+        if (v < 27) {
+            v += 27;
+        }
+
+        require(v == 27 || v == 28, "Invalid signature value");
+
+        return (v, r, s);
+    }
+
+    function getNonce(address user) public view returns (uint256) {
+        return nonces[user];
+    }
+
+    function setNonce(address user, uint256 nonce) public {
+        nonces[user] = nonce;
+    }
+
+    function updateNonce(address user) public {
+        nonces[user]++;
+    }
+
+    function getDomainSeparator() private view returns (bytes32) {
+        return DOMAIN_SEPARATOR;
     }
 
     function deposit(uint256 amount, address receiver) public override returns (uint256 shares) {
         investments[receiver].push(Investment(amount, block.timestamp));
+        // set default interest rate of 2%, but first check if the user has already deposited before
+        if (userToInterestRate[receiver] == 0) {
+            userToInterestRate[receiver] = 200; // 2%
+        }
         return super.deposit(amount, receiver);
     }
+
+
+    function depositWithPermit(uint256 assets, address receiver, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public {
+        IERC20Permit(address(investmentToken)).permit(msg.sender, address(this), assets, deadline, v, r, s);
+        require(IERC20(investmentToken).transferFrom(msg.sender, address(this), assets), "Transfer failed");
+
+        investments[receiver].push(Investment(assets, block.timestamp));
+        // set default interest rate of 2%, but first check if the user has already deposited before
+        if (userToInterestRate[receiver] == 0) {
+            userToInterestRate[receiver] = 200; // 2%
+        }
+        emit Invested(receiver, assets);
+    }
+
 
     function withdraw(uint256 assets, address receiver, address _owner) public override returns (uint256 shares) {
         uint256 totalFee = 0;
@@ -65,20 +134,28 @@ contract GHOVault is ERC4626, Ownable {
         investmentToken.transfer(owner(), totalFee); // Assuming protocolFeeReceiver is the fee recipient
         assets -= totalFee; // Deduct this fee from the assets being withdrawn
         
+        // Now, add the interest on this amount
+        uint256 interestRate = userToInterestRate[_owner];
+        uint256 interest = (assets * interestRate) / 10000;
+        assets += interest;
+
         // Rest of the withdraw logic
         return super.withdraw(assets, receiver, _owner);
     }
 
-    function depositAndConvert(address tokenAddress, uint256 amount) public {
+    function depositAndConvert(address tokenAddress, uint256 assets) public {
         require(tokenAddress != address(investmentToken), "GHO deposit not allowed");
 
         IERC20 token = IERC20(tokenAddress);
-        require(token.transferFrom(msg.sender, address(this), amount), "Transfer failed");
+        require(token.transferFrom(msg.sender, address(this), assets), "Transfer failed");
 
         uint256 balanceBeforeSwap = investmentToken.balanceOf(address(this));
+        if (userToInterestRate[msg.sender] == 0) {
+            userToInterestRate[msg.sender] = 200; // 2%
+        }
         
         // Approve the DEX to spend the token
-        token.approve(address(dexRouter), amount);
+        token.approve(address(dexRouter), assets);
 
         // Define the swap path (token -> GHO)
         address[] memory path = new address[](2);
@@ -87,7 +164,7 @@ contract GHOVault is ERC4626, Ownable {
 
         // Execute the swap (setting amountOutMin to 0 for simplicity, but should be calculated properly)
         dexRouter.swapExactTokensForTokens(
-            amount,
+            assets,
             0, // Ideally, set this to a reasonable amount to mitigate slippage
             path,
             address(this),
