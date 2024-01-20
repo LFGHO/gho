@@ -22,6 +22,7 @@
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.21.2",
     "react-tiny-popover": "^8.0.4",
+    "react-tooltip": "^5.25.2",
     "sort-by": "^1.2.0"
   },
   "devDependencies": {
