@@ -6,25 +6,44 @@ import "./CreditForm.css";
 import InputElement from "./components/InputElement";
 import handshake from "../../assets/images/handshake.png";
 import CustomBtn2 from "../../components/ActionButton";
+import {
+  ConnectEmbed,
+  useShowConnectEmbed,
+  useAddress,
+} from "@thirdweb-dev/react";
 
 function CreditForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const address = useAddress();
+  const loginOptional = false;
+  const showConnectEmbed = useShowConnectEmbed(loginOptional);
+
+  const [amount, setAmount] = useState("");
+  const [interest, setInterest] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  
 
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
 
+  let buttonText;
+  if (data === "borrow") {
+    buttonText = "Borrow";
+  } else if (data === "lend") {
+    buttonText = "Lend";
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     // checking for empty fields
-    if (email === "") {
-      toast.error("Email is required");
+    if (amount === "") {
+      toast.error("Amount is required");
       return;
-    } else if (password === "") {
-      toast.error("Password is required");
+    } else if (interest === "") {
+      toast.error("Interest Rate is required");
       return;
     }
 
@@ -33,13 +52,15 @@ function CreditForm() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/dashboard/addInList`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email,
-            password,
+            address: address,
+            amount: amount,
+            i_rate: interest,
+            transactionType: data,
           }),
         }
       );
@@ -48,20 +69,24 @@ function CreditForm() {
       if (!response.ok) {
         toast.error(json.msg);
       } else {
-        setEmail("");
-        setPassword("");
-        toast.success(json.msg);
+        setAmount("");
+        setInterest("");
+        toast.success("Added In the List Successfully!");
 
-        localStorage.setItem("token", json.data.token);
-        localStorage.setItem("userId", json.userId);
-        const expiration = new Date();
-        expiration.setDate(expiration.getDate() + 5);
-        localStorage.setItem("expiration", expiration.toISOString());
-        navigate("/dashboard");
+        if (data === "borrow") {
+          navigate("/borrowing-list");
+        }
+        else if (data === "lend") {
+          navigate("/lending-list");
+        }
+        else{
+          navigate("/portfolio");
+        }
+        
       }
     } catch (error) {
       console.log(error);
-      toast.error("Unable to login, Try again later!");
+      toast.error("Unable to update the List, Try again later!");
       setIsLoading(false);
     }
   };
@@ -79,30 +104,23 @@ function CreditForm() {
         </h1>
 
         <InputElement
-          placeholder="Enter Wallet Address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={false}
-          type="text"
-        />
-        <InputElement
-          placeholder="Enter the Amount"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter the Amount in $"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
           disabled={false}
           type="number"
           step="0.01"
         />
         <InputElement
-          placeholder="Enter the Interest Rate"
-          // value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter the Interest Rate in %"
+          value={interest}
+          onChange={(e) => setInterest(e.target.value)}
           disabled={false}
           type="number"
           step="0.01"
         />
 
-        <CustomBtn2 onClick={handleLogin} text={data} />
+        <CustomBtn2 onClick={handleLogin} text={buttonText} />
       </form>
     </div>
   );

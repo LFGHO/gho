@@ -8,6 +8,7 @@ router.post('/saveAnswer', dashboardControllers.saveAnswer);
 router.post('/getUserData', dashboardControllers.getUserData);
 router.post('/addInList', dashboardControllers.addInList);
 router.post('/getList', dashboardControllers.getList);
+router.get('/deleteEntrie/:id', dashboardControllers.deleteEntrie);
 
 
 module.exports = router

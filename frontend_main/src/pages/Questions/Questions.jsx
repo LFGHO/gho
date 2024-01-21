@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../../components/Button";
 import ButtonGradient from "../../components/ButtonGradient";
+import { ToastContainer, toast } from "react-toastify";
 
 const question = [
   {

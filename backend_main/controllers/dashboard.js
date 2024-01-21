@@ -154,13 +154,23 @@ const addInList = async (req, res) => {
 
 const getList = async (req, res) => {
   const type = req.body.type;
-  console.log(type);
   try {
-    const list = await List.find({ transactionType: type }, { _id: 0, __v:0 }).sort({ _id: -1 });
+    const list = await List.find({ transactionType: type }, { __v:0 }).sort({ _id: -1 });
     res.status(StatusCodes.OK).json({ list });
   } catch (error) {
     console.log(error);
     throw new InternalServerError("can't get list, try again later");
+  }
+};
+
+const deleteEntrie = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await List.findByIdAndDelete(id);
+    res.status(StatusCodes.OK).json({ msg: "Entrie deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    throw new InternalServerError("can't delete entrie, try again later");
   }
 };
 
@@ -172,4 +182,5 @@ module.exports = {
   getUserData,
   addInList,
   getList,
+  deleteEntrie,
 };
