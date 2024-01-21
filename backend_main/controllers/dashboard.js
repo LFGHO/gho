@@ -175,6 +175,33 @@ const deleteEntrie = async (req, res) => {
 };
 
 
+const changeStatus = async (req, res) => {
+  const id = req.params.id;
+  
+  try {
+    const entrie = await List.findById(id);
+    entrie.transactionType = "pending";
+    await entrie.save();
+    res.status(StatusCodes.OK).json({ msg: "Request Sent to Deligaters!" });
+  } catch (error) {
+    console.log(error);
+    throw new InternalServerError("can't send the request now, try again later");
+  }
+}
+
+const getNotifications = async (req, res) => {
+  const address = req.body.address;
+  console.log(address);
+  try {
+    const list = await List.find({ address: address, transactionType: "pending" }, { __v:0 }).sort({ _id: -1 });
+    res.status(StatusCodes.OK).json({ list });
+  } catch (error) {
+    console.log(error);
+    throw new InternalServerError("can't get notifications, try again later");
+  }
+};
+
+
 
 module.exports = {
   depositAmount,
@@ -183,4 +210,6 @@ module.exports = {
   addInList,
   getList,
   deleteEntrie,
+  changeStatus,
+  getNotifications,
 };

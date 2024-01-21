@@ -78,14 +78,14 @@ function Navbar() {
               </Button>
             </Link>
 
-            {/* <Link to="/coming-soon" className="flex">
+            <Link to="/notifications" className="flex">
               <Button
                 color="inherit"
                 sx={{ display: { xs: "none", lg: "block" } }}
               >
-                Cross Chain Payments
+                Notifications
               </Button>
-            </Link> */}
+            </Link>
 
             <Button
               color="inherit"
@@ -164,11 +164,11 @@ function Navbar() {
                 </Button>
               </Link>
 
-              {/* <Link to="/coming-soon">
+              <Link to="/notifications">
                 <Button color="inherit" onClick={closeDrawer}>
-                  Cross Chain Payments{" "}
+                  Notifications
                 </Button>
-              </Link> */}
+              </Link>
 
               <Button color="inherit" onClick={closeDrawer}>
                 <NormalButton

@@ -73,6 +73,29 @@ function List({mode}) {
     }
   };
 
+  const changeStatus = (id) => async () => { 
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/dashboard/changeStatus/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const json = await response.json();
+      if (!response.ok) {
+        toast.error(json.msg);
+      } else {
+        toast.success(json.msg);
+        load_data();
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   function parseISOString(s) {
     var b = s.split(/\D+/);
     return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
@@ -115,7 +138,7 @@ function List({mode}) {
                 <td>{isoFormatDMY(val.date)}</td>
                 <td>{val.i_rate}%</td>
                 <td className="w-20">
-                  {val.address === address ? <Button text="Delete" onClick={deleteEntrie(val._id)} />:<Button text={mode.charAt(0).toUpperCase() + mode.slice(1)} />}
+                  {val.address === address ? <Button text="Delete" onClick={deleteEntrie(val._id)} />: mode === "borrow" ? <Button text={mode.charAt(0).toUpperCase() + mode.slice(1)} onClick={changeStatus(val._id)}/> : <Button text={mode.charAt(0).toUpperCase() + mode.slice(1)} />}
                 </td>
               </tr>
             );

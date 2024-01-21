@@ -84,7 +84,7 @@ function ProtfolioCardIntra() {
         </div>
         <div className="col-span-2">
           <div className="mx-5">
-            <Button text="Withdraw" disable={true}/>
+            <Button text="Withdraw" onClick={() => (toast.info("Your Assets will reach your account automatically!"))}/>
           </div>
         </div>
       </div>
