@@ -4,7 +4,7 @@ import {privateKeyToAccount} from 'viem/accounts';
 import {sepolia} from 'viem/chains';
 import {abi, bytecode} from './StableDebtToken';
 
-import {getRSV} from "./delegateWithSig";
+import {getRSV} from "./delgationSignature";
 
 dotenv.config();
 
@@ -89,28 +89,31 @@ export async function decreaseAllowance(_address: string, _value: string) {
 export async function delegationWithSig(
         delegator: string,
         delegatee: string,
-        value: bigint,
-        deadline: bigint,
-        signedMessage: string // v,r,s
+        value: number,
+        deadline: number,
+        signedMessage: string // r,s,v
     ) {
     const { r, s, v } = getRSV(signedMessage);
+    console.log("r -> ", r, " len = ", r.length);
+    console.log("s -> ", s, " len = ", s.length);
  
-    const rbyte = stringToHex(
-        r,
-        { size: 32 }
-    )
-    const sbyte = stringToHex(
-        s,
-        { size: 32 }
-    )
-    // const arr = new Uint8Array(v);
+    // const rbyte = stringToHex(
+    //     r,
+    //     { size: 32 }
+    // )
+    // const sbyte = stringToHex(
+    //     s,
+    //     { size: 32 }
+    // )
+    // console.log("rbyte -> ", rbyte, " len = ", rbyte.length);
+    // console.log("sbyte -> ", sbyte, " len = ", sbyte.length);
 
     console.log("\nInsidedelegationWithSig(), calling with writeContract now\n")
     const delegationWithSigHash = await walletClient.writeContract({
         address: (`0x${process.env.STABLE_DEBT_TOKEN_ADDRESS}`),
         abi: abi,
         functionName: "delegationWithSig",
-        args: [`0x${delegator}`, `0x${delegatee}`, value, deadline, r, rbyte, sbyte],
+        args: [`0x${delegator}`, `0x${delegatee}`, value, deadline, v, stringToHex(r), stringToHex(s)],
     });
 
     await publicClient.waitForTransactionReceipt({ hash: delegationWithSigHash })
