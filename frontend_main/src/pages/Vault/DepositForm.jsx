@@ -11,6 +11,7 @@ import { Web3Button } from "@thirdweb-dev/react";
 function DepositForm() {
   const [amount, setAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); 
 
   return (
     <div className="Login-user-container">
@@ -19,7 +20,7 @@ function DepositForm() {
           <img src={handshake} />
         </div>
       </div>
-      <form className="Login-Form w-full px-24 md:px-48">
+      <div className="Login-Form w-full px-24 md:px-48">
         <h1 className=" text-white font-semibold text-3xl mb-7">
           Enter Amount to Deposit!
         </h1>
@@ -35,20 +36,24 @@ function DepositForm() {
 
         {/* <CustomBtn2  text="Deposit" /> */}
         <CustomBtn2>
-          <Web3Button
+        <Web3Button
             contractAddress="0xc4bF5CbDaBE595361438F8c6a187bDc330539c60"
             action={async (contract) => {
               await contract.erc20.transfer(
                 "0x6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0",
-                1
+                amount
               );
+                setAmount("");
+                navigate("/portfolio");
+                toast.success("Amount Deposited Successfully");
             }}
             className="my-custom-class-text"
           >
             Deposit
           </Web3Button>
         </CustomBtn2>
-      </form>
+        
+      </div>
     </div>
   );
 }
