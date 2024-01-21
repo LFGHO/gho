@@ -6,36 +6,25 @@ import SplitButton from "../../components/SplitButton";
 
 const data = [
   {
-    title: "Lorem Ipsum",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
+    title: "MultiStrategy Vaults",
   },
   {
-    title: "Lorem Ipsum",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
+    title: "Social Credit Delegation Platform",
   },
   {
-    title: "Lorem Ipsum",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
+    title: "Account Abstraction Wallet",
   },
   {
-    title: "Lorem Ipsum",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
+    title: "Gasless Transactions",
   },
   {
-    title: "Lorem Ipsum",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
+    title: "PortFolio management",
   },
   {
-    title: "Lorem Ipsum",
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the"
+    title: "Interactive UI",
   },
+  
 ]
-
-const options = [
-  { label: 'Profile', url: '#' },
-  { label: 'Settings', url: '#' },
-  { label: 'Logout', url: '#' },
-];
 function Dashboard() {
   return (
     <>
