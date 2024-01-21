@@ -108,7 +108,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThirdwebProvider
       activeChain={Sepolia}
-      clientId="Y8d61c74e-effb-4a49-9c29-6b88005758e1"
+      clientId="61a6d8958608c0895498206cf21fc890"
       // locale={en()}
       supportedWallets={[
         smartWallet(

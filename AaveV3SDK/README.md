@@ -36,7 +36,7 @@ This TypeScript SDK provides comprehensive tools for interacting with Aave v3's 
 To use this SDK, ensure Node.js is installed on your system. Follow these steps to get started:
 
 ```bash
-$ git  clone github.com/LFGHO/gho
+$ git  clone https://github.com/LFGHO/gho.git
 
 $ cd gho/AaveV3SDK
 
