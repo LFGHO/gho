@@ -44,11 +44,11 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
       <li><a href="#installation">Installation</a></li>
     </ul>
   </li> -->
-  <li><a href="# Credit Delegation">Credit Delegation</a></li>
-  <li><a href="# ERC4626 Vaults powered by our in-house ML models">MultiStrategy ML-based Vaults</a></li>
-  <li><a href="# Full fledged Account Abstraction">Account Abstraction</a></li>
+  <li><a href="# GHOvardhan Vaults: Harnessing AI for Optimized Crypto Investments">MultiStrategy ML-based Vaults</a></li>
+  <li><a href="# Full fledged Account Abstraction">Full-fledged Account Abstraction with Gasless Transactions and Smart Accounts</a></li>
+  <li><a href="#ML Models">In-house, highy accurate ML Models</a></li>
+  <li><a href="# Credit Delegation">Credit Delegation Extravaganza</a></li>
   <li><a href="## Interactive UI">Interactive User Interface</a></li>
-  <li><a href="#license">License</a></li>
   <li><a href="#license">License</a></li>
   <li><a href="#contributing">Contributing</a></li>
 </ol>
@@ -58,7 +58,7 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
 <br>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-# ERC4626 Vaults powered by our in-house ML models
+# ML models
 <p align="center">
 <img src="Utils/prediction.png"  width="580" height="580">
 </p>
@@ -86,6 +86,26 @@ Through our platform, we are not just facilitating financial transactions; we ar
 
 <br>
 <br>
+
+# GHOvardhan Vaults: Harnessing AI for Optimized Crypto Investments
+1. Long-Term Investment Vault
+Maximize Your Future with AI-Driven Strategies
+
+Our Long-Term Investment Vault is designed for the visionary investor. By leveraging advanced machine learning models, this vault optimizes your returns over an extended period. Here's how it works:
+
+Flexible Deposit Window: Deposit your funds at your convenience.
+Tailored Investment Duration: Specify your investment timeline for each deposit. Longer commitments are encouraged for optimal growth.
+Early Withdrawal Fee: A nominal fee is applied for withdrawals before the specified deadline, ensuring commitment to your investment journey.
+Personalized Portfolio Creation: Utilize our innovative NLP-based form, which gathers insights about your investment preferences and goals. This allows us to craft a unique investment portfolio that's exclusively tailored to your financial aspirations.
+2. IntraDay Vault
+Revolutionize Your Day Trading with Credit Delegation
+
+The IntraDay Vault represents the pinnacle of day trading innovation, utilizing credit delegation for agile and efficient intraday investments. Experience the cutting edge of cryptocurrency trading:
+
+Credit Delegation Mechanism: As delegators, users entrust us with their credits, and we, the vault, act as the delegatee, deploying these credits in dynamic intraday trading strategies.
+Single Daily Investment: We maintain exclusivity and focus by accepting only one deposit per user per day. This ensures maximum dedication to each day's trading potential.
+Automated Day Trading: Our advanced AI algorithms engage in sophisticated day trading strategies, capitalizing on daily market fluctuations.
+Effortless Profit Distribution: At the end of the trading day, profits are automatically calculated and distributed to investors' accounts, post-deduction of our service fee. This seamless process ensures that your investment yields are promptly and efficiently returned to you.
 
 # Full fledged Account Abstraction
 <p align="center">
