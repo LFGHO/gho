@@ -44,7 +44,7 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
       <li><a href="#installation">Installation</a></li>
     </ul>
   </li> -->
-  <li><a href="# GHOvardhan Vaults: Harnessing AI for Optimized Crypto Investments">MultiStrategy ML-based Vaults</a></li>
+  <li><a href="## GHOvardhan Vaults: Harnessing AI for Optimized Crypto Investments">MultiStrategy ML-based Vaults</a></li>
   <li><a href="./AaveV3SDK/README.md">Powerful SDK</a></li>
   <li><a href="# Full fledged Account Abstraction">Full-fledged Account Abstraction with Gasless Transactions and Smart Accounts</a></li>
   <li><a href="#ML Models">In-house, highy accurate ML Models</a></li>
@@ -58,7 +58,7 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
 <br>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-# GHOvardhan Vaults: Harnessing AI for Optimized Crypto Investments
+## GHOvardhan Vaults: Harnessing AI for Optimized Crypto Investments
 
 ![Alt text](Utils/screencapture-localhost-5173-vault-options-2024-01-21-21_50_57.png)
 
