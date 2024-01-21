@@ -1,14 +1,11 @@
 import {privateKeyToAccount} from 'viem/accounts';
 const account = privateKeyToAccount(`0x${process.env.PRIVATE_KEY}`);
 
-import {delegationWithSigSignedMsg, getRSV} from "./delegateWithSig";
-
-import {approveDelegation, delegationWithSig} from "./writeContractStable";
+import {delegationWithSigSignedMsg, getRSV} from "./delgationSignature";
+import {approveDelegation, delegationWithSig} from "./writeContractVariable";
 import {getDomainSeparator, getDelegationWithSigTYPEHASH, getNonces} from "./readContractStable";
-// import {getDomainSeparator, getDelegationWithSigTYPEHASH, getNonces} from "./readContractVariable";
-import { ethers } from 'ethers';
 
-//TODO: Calls delegationWithSig
+
 async function main() {
     // await approveDelegation("0x6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0", "100")
     const nowInSeconds = Math.floor(Date.now() / 1000);
@@ -26,7 +23,7 @@ async function main() {
     const signedMessage = await account.signMessage({
         message: messageToSign
     })
-    console.log("SignedMessage: \n\n",messageToSign, "\n\n");
+    console.log("SignedMessage: \n\n",signedMessage, "\n\n");
 
     const vrs = getRSV(signedMessage);
     console.log("r=", vrs.r);
@@ -37,8 +34,8 @@ async function main() {
     const delegationWithSigHash = await delegationWithSig(
         "6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0",
         "8c71189996B1a8472650e7A8723411Ee3276FF61",
-        BigInt(100),
-        BigInt(deadline),
+        100,
+        deadline,
         signedMessage
     );
     console.log(`Transaction sent with hash: ${delegationWithSigHash}`);
