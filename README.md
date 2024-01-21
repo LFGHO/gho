@@ -87,6 +87,17 @@ Effortless Profit Distribution: At the end of the trading day, profits are autom
 <br>
 
 # Full fledged Account Abstraction
+
+<p>
+<img src="screencapture-localhost-5173-login-2024-01-21-21_52_19.png"  width="700">
+<img src="screencapture-localhost-5173-login-2024-01-21-21_52_29.png"  width="700">
+</p>
+
+```
+Sign in with your Email or social credentials, or your metamask wallet if you're old fashioned like us.
+Either way, we've got it handled ;)
+```
+
 <p align="center">
 <img src="Utils/account_abstraction.png"  width="580" height="580">
 </p>
@@ -143,7 +154,8 @@ Through our platform, we are not just facilitating financial transactions; we ar
 <br>
 
 ## Interactive UI
-
+![Alt text](screencapture-localhost-5173-2024-01-21-21_49_31.png)
+![Alt text](screencapture-localhost-5173-portfolio-2024-01-21-21_51_55.png)
 At GHOvardhan, we've meticulously crafted a user interface that's not just functional but also intuitively engaging, thanks to our cutting-edge stack comprising React, Node.js, Vite, and MongoDB. Our deployment strategy ensures a harmonious integration of both frontend and backend components, providing a seamless and robust user experience.
 
 Frontend Deployment:
