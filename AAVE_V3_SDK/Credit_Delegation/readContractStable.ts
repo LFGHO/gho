@@ -1,4 +1,4 @@
-const CONTRACT_ADDRESS = '0x7b007a8a32064bd79efefc0f2a7ed32a80ca1fa1';
+const CONTRACT_ADDRESS = '0xd1CF2FBf4fb82045eE0B116eB107d29246E8DCe9';
 
 import dotenv from 'dotenv';
 import { createPublicClient, createWalletClient, http } from 'viem';
