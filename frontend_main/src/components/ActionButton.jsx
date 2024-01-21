@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ActionButton({ text, loadingText, isLoading, onClick }) {
+function ActionButton({ text, loadingText, isLoading, onClick , children}) {
   return (
     <div
       disabled={isLoading}
@@ -9,7 +9,7 @@ function ActionButton({ text, loadingText, isLoading, onClick }) {
       active
       onClick={onClick}
     >
-      {isLoading ? loadingText : text}
+      {isLoading ? loadingText : text || children}
     </div>
   );
 }

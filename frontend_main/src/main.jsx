@@ -29,6 +29,7 @@ import Login from "./pages/Auth/Login";
 import DepositPage from "./pages/Vault/DepositPage";
 import CreditForm from "./pages/Credit/CreditForm";
 import Notifications from "./pages/Notifications/Notifications";
+import DepositForm from "./pages/Vault/DepositForm";
 
 const smartWalletOptions = {
   factoryAddress: "0x9d0a83c7a52bc028cf953af40836ff2e4d65980d",
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "/credit-form",
         element: <CreditForm />,
+      },
+      {
+        path: "/deposit-form",
+        element: <DepositForm />,
       },
       {
         path: "/login",
