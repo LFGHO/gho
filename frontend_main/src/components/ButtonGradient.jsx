@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ButtonGradient({text , children, navigate}) {
+function ButtonGradient({text , children, navigate, onClick}) {
   return (
-    <Link to={navigate}>
+    <Link to={navigate} onClick={onClick}>
     <div
       style={{
         backgroundImage: "linear-gradient(to bottom, #d44a8f, #724ed5)", // Red to blue gradient

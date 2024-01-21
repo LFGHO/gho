@@ -39,9 +39,6 @@ const options = [
 function Dashboard() {
   return (
     <>
-    <div>
-      <SplitButton options={options}/>
-    </div>
     <div className="grid grid-cols-3">
     
       {data.map((item) => (
