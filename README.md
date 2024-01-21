@@ -1,36 +1,14 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-<a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/LFGHO/gho">
-    <img src="./Utils/Project_LOGO.png" alt="Logo" width="80" height="80">
+    <img src="./Utils/Project_LOGO.png" alt="Logo" width="280" height="280">
   </a>
 
 <h3 align="center">GHOvardhan</h3>
@@ -58,7 +36,10 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
 
 ## Features
 
-- 
+## Full fledged Account Abstraction
+<!-- ![account-abstraction](Utils/account_abstraction.png){ width=50% } -->
+<img src="Utils/account_abstraction.png" alt="Logo" width="580" height="580">
+
 - 
 
 See the [open issues](https://github.com/LFGHO/gho/issues) for a full list of proposed features (and known issues).
@@ -152,17 +133,11 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
