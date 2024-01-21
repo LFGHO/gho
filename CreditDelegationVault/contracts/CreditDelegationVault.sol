@@ -6,68 +6,117 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-// Takes a max fee of 6% for investments 
-library FeeCalculator {
-    function calculateTimeBasedFee(uint256 amount, uint256 depositTime, uint256 feeBasisPoints, uint256 feeDecreaseInterval) internal view returns (uint256) {
-        uint256 timeElapsed = block.timestamp - depositTime;
-
-        // If time elapsed is less than 24 hours (86400 seconds), charge 30% fee
-        if (timeElapsed < feeDecreaseInterval * 1 days) {
-            return (amount * 3000) / 10000; // 30% fee
-        } else {
-            // Fee calculation for time beyond 24 hours
-            uint256 maxFeeBasisPoints = feeBasisPoints; // 6%
-            uint256 minAmountForReducedFee = 100000; // Minimum amount threshold for reduced fee //! (To avoid divide by zero error)
-
-            uint256 effectiveFeeBasisPoints;
-            if (amount < minAmountForReducedFee) {
-                effectiveFeeBasisPoints = maxFeeBasisPoints;
-            } else {
-                uint256 inverseFeeRate = 10000000 / amount; // Adjusted inverse fee calculation
-
-                // Ensure the fee is less than 6%
-                effectiveFeeBasisPoints = inverseFeeRate < maxFeeBasisPoints ? inverseFeeRate : maxFeeBasisPoints;
-            }
-
-            return (amount * effectiveFeeBasisPoints) / 10000;
-        }
+contract FeeCalculator {
+    
+    /**
+     * @dev Calculates the total fee for a withdrawal from the vault.
+     *
+     * @param avgStableRate The average stable rate charged to the vault (in basis points).
+     * @param amountInvested The amount that was initially invested in the vault.
+     * @param interestEarned The interest earned on the investment (in basis points).
+     * @param feeBasisPoints The fee charged on the interest earned (in basis points).
+     * @return totalFee The total fee amount.
+     */
+    function calculateFee(
+        uint256 avgStableRate,
+        uint256 amountInvested,
+        uint256 interestEarned,
+        uint256 feeBasisPoints
+    ) public pure returns (uint256 totalFee) {
+        // Convert basis points to a decimal
+        uint256 stableRateFee = avgStableRate * amountInvested / 10000;
+        uint256 additionalFee = (interestEarned * amountInvested / 10000) * feeBasisPoints / 10000;
+        
+        // Calculate the total fee
+        totalFee = stableRateFee + additionalFee;
+        return totalFee;
     }
 }
 
-library YieldCalculator {
-    function CalculateUserYield()
-}
 
 //* User can only invest in GHO; Gives back all the assets and empties vault every 24 hours
 contract CreditDelegationVault is ERC4626, Ownable {
     uint256 public feeBasisPoints = 600; // 5% High Fee due to high risk and high yield
     uint256 public feeDecreaseInterval = 1 days; // Intraday Trading
-
-    IERC20 public investmentToken; // GHO Token
+    
     uint256 private investedAmount; // Variable to track the amount withdrawn for investment
+    
+    IERC20 public investmentToken; // GHO Token
+    address constant STABLE_DEBT_TOKEN = 0xd1CF2FBf4fb82045eE0B116eB107d29246E8DCe9;
+    address constant public VARIABLE_DEBT_TOKEN = 0x0562453c3DAFBB5e625483af58f4E6D668c44e19;
+    address constant public V3_POOL_IMPLEMENTATION = 0xd1CF2FBf4fb82045eE0B116eB107d29246E8DCe9;
 
+    // State variable to store original amount invested
     uint256 public originalAmountInvested;
+
+    // Mapping to track daily profits (date => profit)
+    // The key is a timestamp representing the start of each day
+    mapping(uint256 => uint256) private dayToAPY;
+
+    // Function to update and return total earnings
+    function setTodaysAPY() public onlyOwner {
+        uint256 todayProfit = totalAssets() - originalAmountInvested;
+        originalAmountInvested = 0; // Reset the vault
+        
+        // Get the timestamp for the start of today
+        uint256 today = block.timestamp - (block.timestamp % 86400); // 86400 seconds in a day
+
+        // Update the daily profits mapping
+        dayToAPY[today] = todayProfit;
+    }
+
+    // Function to get the profit for a specific day
+    // The `date` parameter should be a timestamp representing the start of that day
+    function getDatToAPY(uint256 date) public view returns (uint256) {
+        return dayToAPY[date];
+    }
 
     struct Investment {
         uint256 amount;
         uint256 depositTime;
     }
     mapping(address => Investment) private userToInvestment;
+    address[] private userAddresses;  // Array to store user addresses
 
     // Event declarations
     event Invested(address indexed owner, uint256 amount);
     event YieldReturned(address indexed owner, uint256 amount);
+    event VaultEmptied(address indexed owner, uint256 amount);
+    event AssetsReturned(address indexed owner, uint256 amount);
+    event InvestmentMade(address indexed investor, uint256 amount, uint256 timestamp);
+
+    modifier onlyOncePerDay() {
+        require(userToInvestment[msg.sender].depositTime < block.timestamp - (block.timestamp % 86400), "Investment already made today");
+        _;
+    }    
 
     constructor(IERC20 _ghoToken) ERC4626(_ghoToken) ERC20("Gho Token", "GHO") Ownable(msg.sender) {
         investmentToken = _ghoToken;
         originalAmountInvested = 0;
     }
 
-    function getTotalEarnings() return (uint256) {
-        return totalAssets() - originalAmountInvested;
-    }
+    function emptyVault() public onlyOwner {
+        setTodaysAPY();
+        uint256 intraDayProfit = totalAssets() - originalAmountInvested;
 
-    function depositWithPermit(uint256 assets, address receiver, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public onlyOwner {
+        // Transfer the assets back to their respective owners
+        for (uint256 i = 0; i < userAddresses.length; i++) {
+            uint256 assets = maxWithdraw(userAddresses[i]);
+            // calculate what share of profit goes to this user by diving their assets by the total assets
+            uint256 profit = intraDayProfit * assets / totalAssets();
+            withdraw(assets + profit, userAddresses[i], userAddresses[i]);
+            
+            emit VaultEmptied(userAddresses[i], assets);
+        }
+
+        // Reset the vault
+        originalAmountInvested = 0;
+    }    
+
+    /// Block users from depositing or withdrawing assets when the vault is going through it's intraday investment cycle
+    function depositWithPermit(uint256 assets, address receiver, uint256 deadline, uint8 v, bytes32 r, bytes32 s) public onlyOwner onlyOncePerDay {
+        // if user already have an investment, revert and emit and event
+
         IERC20Permit(address(investmentToken)).permit(msg.sender, address(this), assets, deadline, v, r, s);
         require(IERC20(investmentToken).transferFrom(msg.sender, address(this), assets), "Transfer failed");
 
@@ -77,30 +126,28 @@ contract CreditDelegationVault is ERC4626, Ownable {
         emit Invested(receiver, assets);
     }
 
-    function deposit(uint256 amount, address receiver) public override onlyOwner returns (uint256 shares) {
-        userToInvestment[receiver] = Investment(amount, block.timestamp);
+    function deposit(uint256 assets, address receiver) public override onlyOwner onlyOncePerDay returns (uint256 shares) {
+        userToInvestment[receiver] = Investment(assets, block.timestamp);
         originalAmountInvested += assets;
 
-        return super.deposit(amount, receiver);
+        return super.deposit(assets, receiver);
     }
 
     // Only the owner can withdraw funds (and then manually send back the earnings back to users)
     function withdraw(uint256 assets, address receiver, address _owner) public override onlyOwner returns (uint256 shares) {
-        uint256 fee = FeeCalculator.calculateTimeBasedFee(userToInvestment[_owner].amount, userToInvestment[_owner].depositTime, feeBasisPoints, feeDecreaseInterval);
-        
-        
-
-        investmentToken.transfer(owner(), fee); // Assuming protocolFeeReceiver is the fee recipient
-        
-        // Deduct this fee from the assets being withdrawn
-        assets -= fee;
-
-        // Rest of the withdraw logic
         return super.withdraw(assets, receiver, _owner);
     }
 
+    function redeem(uint256 shares, address receiver, address _owner) public override onlyOwner returns (uint256 assets) {
+        return super.redeem(shares, receiver, _owner);
+    }
+
+    function mint(uint256 shares, address receiver) public override onlyOwner returns (uint256) {
+        return super.mint(shares, receiver);
+    }
+
     // Function for the owner to withdraw funds for investment
-    function withdrawForInvestment(uint256 amount) public onlyOwner {
+    function withdrawForInvestment(uint256 amount) public onlyOwner onlyOncePerDay {
         require(amount <= totalAssets() - investedAmount, "Insufficient balance");
         investedAmount += amount;
         investmentToken.transfer(msg.sender, amount);
@@ -108,10 +155,12 @@ contract CreditDelegationVault is ERC4626, Ownable {
     }
 
     // Function for the owner to return yield (investment returns)
-    function returnInvestmentYield(uint256 amount) public onlyOwner {
+    function returnInvestmentYield(uint256 amount) public onlyOwner onlyOncePerDay {
         require(investmentToken.transferFrom(msg.sender, address(this), amount), "Transfer failed");
         investedAmount -= amount;
         emit YieldReturned(msg.sender, amount);
+
+        emptyVault();
     }
 
     // Override totalAssets to account for invested amount

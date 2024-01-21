@@ -7,6 +7,19 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 library FeeCalculator {
+    /**
+     * @dev Calculates a time-based fee for an amount based on the time elapsed since deposit.
+     *
+     * @param amount The amount on which the fee is to be calculated.
+     * @param depositTime The timestamp when the deposit was made.
+     * @param feeBasisPoints The initial fee in basis points. One basis point is 1/100th of a percent.
+     * @param feeDecreaseInterval The interval (in seconds) after which the fee is reduced.
+     * @return The calculated fee based on the time elapsed and initial fee settings.
+     *
+     * The fee is calculated by reducing the initial fee basis points by 100 for each interval passed 
+     * since the deposit time. The fee reduction continues until it reaches zero. The function then 
+     * applies the effective fee basis points to the amount and returns the calculated fee.
+     */
     function calculateTimeBasedFee(uint256 amount, uint256 depositTime, uint256 feeBasisPoints, uint256 feeDecreaseInterval) internal view returns (uint256) {
         uint256 timeElapsed = block.timestamp - depositTime;
         uint256 feeReduction = (timeElapsed / feeDecreaseInterval) * 100; // Reducing 100 basis points for each interval passed
@@ -16,6 +29,28 @@ library FeeCalculator {
 }
 
 interface IUniswapV2Router {
+    /**
+     * @notice Swap an exact amount of input tokens for as many output tokens as possible, 
+     * complying with the specified minimum amount of output tokens.
+     *
+     * @dev This function allows a user to swap a precise amount of input tokens for 
+     * as many output tokens as possible, adhering to the `amountOutMin` parameter.
+     *
+     * @param amountIn The amount of input tokens to send.
+     * @param amountOutMin The minimum amount of output tokens that must be received 
+     * for the transaction not to revert.
+     * @param path An array of token addresses. This array must have at least two elements,
+     * where the first element is the address of the token being sent, and the last is the 
+     * address of the token to receive.
+     * @param to The address to which the output tokens should be sent.
+     * @param deadline The timestamp by which the transaction must be confirmed to not revert.
+     * This deadline helps ensure the timeliness of transactions and protects users from 
+     * price slippage in volatile market conditions.
+     *
+     * @return amounts An array of uint256, where each element in the array represents the 
+     * amount of a token at that index of the `path` array. The first element of the array 
+     * is the amount of the input token, and the last element is the amount of the output token.
+     */
     function swapExactTokensForTokens(
         uint amountIn,
         uint amountOutMin,
