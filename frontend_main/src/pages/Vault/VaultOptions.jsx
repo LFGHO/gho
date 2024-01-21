@@ -11,6 +11,7 @@ import {
   useShowConnectEmbed,
   useAddress,
 } from "@thirdweb-dev/react";
+import { Web3Button } from "@thirdweb-dev/react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -75,7 +76,19 @@ function VaultOptions() {
                 className="w-28 h-28 md:w-44 md:h-44"
               />
               <div className="mb-2">
-                <TitleSm>Intraday</TitleSm>
+              <Web3Button
+                contractAddress="0xc4bF5CbDaBE595361438F8c6a187bDc330539c60"
+                action={async (contract) => {
+                  await contract.erc20.transfer(
+                    "0x6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0",
+                    1
+                  );
+                }}
+                className="my-custom-class-text"
+              >
+                Pay with any <br/> ERC20 token
+              </Web3Button>
+                {/* <TitleSm>Intraday</TitleSm> */}
               </div>
               <p className="text-center text-xs px-4">
                 Use your AAVE Credit Delegation points for a high risk high

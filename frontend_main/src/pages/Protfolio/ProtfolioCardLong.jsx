@@ -3,7 +3,7 @@ import TextWithHint from "../../components/TextWithHint";
 import ButtonGradient from "../../components/ButtonGradient";
 import Button from "../../components/Button";
 import Chart from "./Chart";
-import {color} from "../../theme";
+import { color } from "../../theme";
 import {
   ConnectEmbed,
   useShowConnectEmbed,
@@ -58,7 +58,10 @@ function ProtfolioCardLong() {
   };
 
   return (
-    <div className="mx-5 md:mx-8 py-5 mb-5 rounded-3xl grid grid-cols-12 gap-4" style={{backgroundColor: color.highlightbg}}>
+    <div
+      className="mx-5 md:mx-8 py-5 mb-5 rounded-3xl grid grid-cols-12 gap-4"
+      style={{ backgroundColor: color.highlightbg }}
+    >
       <div className="col-span-12 md:col-span-4 grid grid-cols-4 gap-y-6">
         <div className="flex flex-col  justify-center items-center col-span-2">
           <TextWithHint text="TVL" hint="Total Value Logged" />
@@ -73,7 +76,10 @@ function ProtfolioCardLong() {
           <p className="font-semibold text-lg">$6980</p>
         </div>
         <div className="flex flex-col  justify-center items-center col-span-2">
-          <TextWithHint text="Expected Yield" hint="This is subjected to changhe depending on the market" />
+          <TextWithHint
+            text="Expected Yield"
+            hint="This is subjected to changhe depending on the market"
+          />
           <p className="font-semibold text-lg">19.5%</p>
         </div>
 
@@ -84,22 +90,24 @@ function ProtfolioCardLong() {
         </div>
         <div className="col-span-2">
           <div className="mx-5">
-            <Button text="Withdraw" />
-            <Web3Button 
-              contractAddress="0xc4bF5CbDaBE595361438F8c6a187bDc330539c60"
-              action = {async (contract) => {
-                await contract.erc20.transfer("0x6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0", 1)
-              }}
 
-            >
-              try transaction
-            </Web3Button>
-
+              <Web3Button
+                contractAddress="0xc4bF5CbDaBE595361438F8c6a187bDc330539c60"
+                action={async (contract) => {
+                  await contract.erc20.transfer(
+                    "0x6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0",
+                    1
+                  );
+                }}
+                className="my-custom-class"
+              >
+                Withdraw
+              </Web3Button>
           </div>
         </div>
       </div>
       <div className="col-span-12 md:col-span-8 px-5 py-5 md:py-0">
-        <Chart intraOrLong={"long"}/>
+        <Chart intraOrLong={"long"} />
       </div>
     </div>
   );

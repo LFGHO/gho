@@ -49,3 +49,26 @@ input::-webkit-inner-spin-button {
 .dropdown a {
   @apply px-4 py-2 no-underline hover:bg-gray-700;
 }
+
+.my-custom-class{
+  color : #fafafc !important;
+  background-color: #332566 !important;
+  border: 2px solid #8349b9 !important;
+  border-radius: 25px !important;
+}
+
+.my-custom-class:hover{
+  background-color: #8349b9 !important;
+}
+
+.my-custom-class-text{
+  color : #fafafc !important;
+  font-size: 20px !important;
+  /* font-style: bold !important; */
+  background-color: inherit !important;
+  margin-bottom: -10px !important;
+  margin-top: -15px !important;
+}
+.my-custom-class-text:hover{
+  color : #8349b9 !important;
+}

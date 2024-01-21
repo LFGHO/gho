@@ -11,6 +11,7 @@ import {
   useShowConnectEmbed,
   useAddress,
 } from "@thirdweb-dev/react";
+import { Web3Button } from "@thirdweb-dev/react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -38,7 +39,7 @@ function DepositPage() {
         </div>
         <div className="flex flex-col items-center md:grid md:grid-cols-4 my-5 md:my-20">
           <div className="md:col-start-2 flex justify-center">
-            <Link
+            <div
               className="flex flex-col  justify-center items-center w-56 md:w-64  h-60 md:h-72 rounded-xl my-3"
               style={{ backgroundColor: color.highlightbg }}
             >
@@ -48,13 +49,20 @@ function DepositPage() {
                 className="w-28 h-28 md:w-44 md:h-44"
               />
               <div className="mb-2">
-                <TitleSm>Pay with any <br/> ERC20 token</TitleSm>
+              <Web3Button
+                contractAddress="0xc4bF5CbDaBE595361438F8c6a187bDc330539c60"
+                action={async (contract) => {
+                  await contract.erc20.transfer(
+                    "0x6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0",
+                    1
+                  );
+                }}
+                className="my-custom-class"
+              >
+                Pay with any <br/> ERC20 token
+              </Web3Button>
               </div>
-              {/* <p className="text-center text-xs px-4">
-                Use your AAVE Credit Delegation points for a high risk high
-                reward Intra-day trade
-              </p> */}
-            </Link>
+            </div>
           </div>
           <div className="md:col-start-3 flex justify-center">
             <Link
@@ -67,12 +75,19 @@ function DepositPage() {
                 className="w-28 h-28 md:w-44 md:h-44"
               />
               <div className="mb-2">
-                <TitleSm>Gasless payment with GHO</TitleSm>
+              <Web3Button
+                contractAddress="0xc4bF5CbDaBE595361438F8c6a187bDc330539c60"
+                action={async (contract) => {
+                  await contract.erc20.transfer(
+                    "0x6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0",
+                    1
+                  );
+                }}
+                className="my-custom-class"
+              >
+                Gasless payment with GHO
+              </Web3Button>
               </div>
-              {/* <p className="text-center text-xs px-4">
-                Use your AAVE Credit Delegation points for a high risk high
-                reward Intra-day trade
-              </p> */}
             </Link>
           </div>
         </div>
