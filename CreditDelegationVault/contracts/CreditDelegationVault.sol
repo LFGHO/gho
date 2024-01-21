@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract FeeCalculator {
+library FeeCalculator {
     
     /**
      * @dev Calculates the total fee for a withdrawal from the vault.
@@ -31,12 +31,57 @@ contract FeeCalculator {
         totalFee = stableRateFee + additionalFee;
         return totalFee;
     }
+
+    /**
+     * @dev Calculates a fee based on the profit percentage.
+     * @param originalAmount The original amount invested.
+     * @param newAmount The new amount after investment growth.
+     * @return feeBasisPoints The fee in basis points (1% to 8%).
+     */
+    function calculateFeeBasisPoints(uint256 originalAmount, uint256 newAmount) public pure returns (uint256 feeBasisPoints) {
+        if(newAmount <= originalAmount) {
+            // No profit or a loss
+            return 0;
+        }
+
+        uint256 profit = newAmount - originalAmount;
+        uint256 profitPercentage = (profit * 10000) / originalAmount; // In basis points
+
+        // Scale the fee between 1% and 8% based on profit percentage
+        feeBasisPoints = scaleFee(profitPercentage);
+
+        return feeBasisPoints;
+    }
+
+    /**
+     * @dev Scales the fee based on profit percentage.
+     * @param profitPercentage The profit percentage in basis points.
+     * @return scaledFee The scaled fee in basis points.
+     */
+    function scaleFee(uint256 profitPercentage) internal pure returns (uint256 scaledFee) {
+        // Define the minimum and maximum fee in basis points (1% and 8%)
+        uint256 minFee = 100; // 1%
+        uint256 maxFee = 800; // 8%
+
+        // Logic to scale the fee
+        // As an example, we linearly scale the fee based on profit percentage
+        // Adjust this logic based on how aggressively you want to scale the fee
+        uint256 feeRange = maxFee - minFee;
+        scaledFee = minFee + ((profitPercentage * feeRange) / 10000);
+
+        // Ensure the fee is within the bounds
+        if (scaledFee > maxFee) {
+            scaledFee = maxFee;
+        }
+
+        return scaledFee;
+    }
 }
 
 
 //* User can only invest in GHO; Gives back all the assets and empties vault every 24 hours
 contract CreditDelegationVault is ERC4626, Ownable {
-    uint256 public feeBasisPoints = 600; // 5% High Fee due to high risk and high yield
+    uint256 public feeBasisPoints = 500; // (Default)5% High Fee due to high risk and high yield
     uint256 public feeDecreaseInterval = 1 days; // Intraday Trading
     
     uint256 private investedAmount; // Variable to track the amount withdrawn for investment
@@ -95,6 +140,10 @@ contract CreditDelegationVault is ERC4626, Ownable {
         originalAmountInvested = 0;
     }
 
+    function setFeeBasisPoints(uint256 _feeBasisPoints) private onlyOwner {
+        feeBasisPoints = _feeBasisPoints;
+    }
+
     function emptyVault() public onlyOwner {
         setTodaysAPY();
         uint256 intraDayProfit = totalAssets() - originalAmountInvested;
@@ -109,6 +158,8 @@ contract CreditDelegationVault is ERC4626, Ownable {
             emit VaultEmptied(userAddresses[i], assets);
         }
 
+        uint256 _feeBasisPoints = FeeCalculator.calculateFeeBasisPoints(originalAmountInvested, totalAssets());
+        setFeeBasisPoints(_feeBasisPoints);
         // Reset the vault
         originalAmountInvested = 0;
     }    
@@ -135,7 +186,11 @@ contract CreditDelegationVault is ERC4626, Ownable {
 
     // Only the owner can withdraw funds (and then manually send back the earnings back to users)
     function withdraw(uint256 assets, address receiver, address _owner) public override onlyOwner returns (uint256 shares) {
-        return super.withdraw(assets, receiver, _owner);
+        // call calculatefee on the "assets", to deduct the fee from the assets
+        uint256 fee = FeeCalculator.calculateFeeBasisPoints(originalAmountInvested, totalAssets());
+        uint256 feeAmount = assets * fee / 10000;
+        uint256 amount = assets - feeAmount;
+        return super.withdraw(amount, receiver, _owner);
     }
 
     function redeem(uint256 shares, address receiver, address _owner) public override onlyOwner returns (uint256 assets) {
