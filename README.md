@@ -16,7 +16,7 @@
   <p align="center">
     "GHOvardhan: Unleashing Digital Prosperity, Inspired by Tradition"
     <br />
-    <a href="DEMO_LINK">View Demo</a>
+    <a href="learnhost.co.in">View Demo</a>
     ·
     <a href="https://github.com/LFGHO/gho/issues">Report Bug</a>
     ·
@@ -111,6 +111,7 @@ See the [open issues](https://github.com/LFGHO/gho/issues) for a full list of pr
 
 <p align="center">
 <img src="Utils/result.png"  width="580" height="580">
+<img src="Utils/image34.png"  width="580" height="580">
 </p>
 
 The diagram above showcases the **predictive performance** of our **ML model** over a **six-month period**, ranging from **July 2023 to January 2024**, for price of ETH on the mainnet. 
@@ -143,7 +144,21 @@ Through our platform, we are not just facilitating financial transactions; we ar
 
 ## Interactive UI
 
+At GHOvardhan, we've meticulously crafted a user interface that's not just functional but also intuitively engaging, thanks to our cutting-edge stack comprising React, Node.js, Vite, and MongoDB. Our deployment strategy ensures a harmonious integration of both frontend and backend components, providing a seamless and robust user experience.
 
+Frontend Deployment:
+Our frontend, built with the dynamic React framework, offers a responsive and interactive user interface. This is further enhanced by Vite's efficient bundling and rapid hot module replacement, ensuring a smooth and fast development experience. Our deployment strategy ensures that the UI is lightweight, fast, and accessible, regardless of the device or platform.
+
+Backend Deployment:
+The backend, powered by Node.js and MongoDB, forms the backbone of our application. It's designed to handle complex data operations and provide a stable, scalable environment. MongoDB's flexible schema adapts perfectly to our varied data needs, ensuring fast and efficient data retrieval and storage.
+
+Account Abstraction and Multi-Chain Connectivity:
+Central to our app's functionality is the account abstraction smart account wallet. This innovative feature simplifies the user experience by abstracting away the complexities of blockchain interactions. It connects seamlessly to multiple chains, allowing users to engage with different cryptocurrencies and blockchain services without the hassle of managing multiple wallets or interfaces.
+
+Gasless Transactions:
+In our pursuit to enhance user convenience, we've integrated a system for gasless transactions. This feature is a game-changer, removing the barrier of gas fees that often hampers transaction efficiency. Users can now enjoy a frictionless experience, engaging in transactions without worrying about the additional cost of gas fees.
+
+At GHOvardhan, we are committed to providing a technologically advanced, user-friendly platform. Our deployment strategy reflects our dedication to innovation, security, and seamless user experience, making digital investment accessible and enjoyable for everyone.
 
 <br>
 <br>
