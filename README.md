@@ -28,7 +28,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Product Name Screen Shot](./Utils/Samarkan.png)
+<!-- ![Product Name Screen Shot](./Utils/Samarkan.png) -->
+<p align="center">
+<img src="Utils/Samarkan.png"  width="1200" height="380">
+</p>
 
 In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a symbol of abundance and divine blessings. Inspired by this auspicious legacy, our venture "GHOvardhan" emerges as a modern-day harbinger of prosperity. Just as Vardhan signifies increasing wealth and auspiciousness, GHOvardhan stands as a sanctuary of financial growth and security in the digital realm. Our company is not merely a platform; it's a guardian of your aspirations, a custodian of your digital wealth. With a suite of meticulously crafted vaults, we ensure your GHO investments flourish, echoing the very essence of Vardhan - growth and prosperity. Our services transcend mere transactions; they're a seamless fusion of tradition and innovation, designed to cater to every GHO-related need, from investing to transferring, from payments to safeguarding your digital treasures. Embrace GHOvardhan, where each interaction is not just a transaction but a step towards a future replete with blessings and prosperity, much like the auspicious Govardhan itself.
 
@@ -37,10 +40,14 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
 ## Features
 
 ## Full fledged Account Abstraction
-<!-- ![account-abstraction](Utils/account_abstraction.png){ width=50% } -->
-<img src="Utils/account_abstraction.png" alt="Logo" width="580" height="580">
+<p align="center">
+<img src="Utils/account_abstraction.png"  width="580" height="580">
+</p>
 
-- 
+Our project harnesses the innovative capabilities of **ERC4337** standard for **account abstraction**, providing a seamless integration of **smart accounts** with our custom **Bundler and Paymaster Infrastructure**. This setup enables advanced features like **ERC712** and **ERC2612 permits**, allowing for more secure and efficient message and transaction signing processes. By incorporating **OpenZeppelin's relayer** services, we ensure that transactions are relayed efficiently, enhancing the scalability and reliability of our system. 
+Furthermore, our platform integrates a unique **social login feature** (Login with email, gmail, twitter, etc.), along with multi-wallet support like **Metamask** and **Coinbase** empowering users to access their smart accounts using their social credentials. 
+This not only simplifies the login process but also provides an option to **effortlessly switch between their social-linked smart accounts and personal EOA accounts**. 
+This integration of social logins with smart accounts helops make On-chain ERC20 transactions more accessible and user-friendly, particularly for those new to the Ethereum ecosystem.
 
 See the [open issues](https://github.com/LFGHO/gho/issues) for a full list of proposed features (and known issues).
 
