@@ -60,6 +60,8 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
 
 # GHOvardhan Vaults: Harnessing AI for Optimized Crypto Investments
 
+![Alt text](screencapture-localhost-5173-vault-options-2024-01-21-21_50_57.png)
+
 <p align="center">
 <img src="Utils/image1.png"  width="580" height="580">
 </p>
@@ -135,6 +137,13 @@ The model has been trained on historical data, incorporating various features su
 <br>
 
 # Credit Delegation
+![Alt text](screencapture-localhost-5173-borrowing-list-2024-01-21-21_50_20.png) 
+![Alt text](screencapture-localhost-5173-lending-list-2024-01-21-21_51_34.png) 
+![Alt text](screencapture-localhost-5173-notifications-2024-01-21-21_50_45.png)
+
+```
+Credit Delegation MarketPlace UI
+```
 
 <p align="center">
 <img src="Utils/creditdelegation.png"  width="580" height="580">
