@@ -60,7 +60,7 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
 
 # GHOvardhan Vaults: Harnessing AI for Optimized Crypto Investments
 
-![Alt text](screencapture-localhost-5173-vault-options-2024-01-21-21_50_57.png)
+![Alt text](Utils/screencapture-localhost-5173-vault-options-2024-01-21-21_50_57.png)
 
 <p align="center">
 <img src="Utils/image1.png"  width="580" height="580">
@@ -91,8 +91,8 @@ Effortless Profit Distribution: At the end of the trading day, profits are autom
 # Full fledged Account Abstraction
 
 <p>
-<img src="screencapture-localhost-5173-login-2024-01-21-21_52_19.png"  width="700">
-<img src="screencapture-localhost-5173-login-2024-01-21-21_52_29.png"  width="700">
+<img src="Utils/screencapture-localhost-5173-login-2024-01-21-21_52_19.png"  width="700">
+<img src="Utils/screencapture-localhost-5173-login-2024-01-21-21_52_29.png"  width="700">
 </p>
 
 ```
@@ -137,9 +137,9 @@ The model has been trained on historical data, incorporating various features su
 <br>
 
 # Credit Delegation
-![Alt text](screencapture-localhost-5173-borrowing-list-2024-01-21-21_50_20.png) 
-![Alt text](screencapture-localhost-5173-lending-list-2024-01-21-21_51_34.png) 
-![Alt text](screencapture-localhost-5173-notifications-2024-01-21-21_50_45.png)
+![Alt text](Utils/screencapture-localhost-5173-borrowing-list-2024-01-21-21_50_20.png) 
+![Alt text](Utils/screencapture-localhost-5173-lending-list-2024-01-21-21_51_34.png) 
+![Alt text](Utils/screencapture-localhost-5173-notifications-2024-01-21-21_50_45.png)
 
 ```
 Credit Delegation MarketPlace UI
@@ -163,8 +163,8 @@ Through our platform, we are not just facilitating financial transactions; we ar
 <br>
 
 ## Interactive UI
-![Alt text](screencapture-localhost-5173-2024-01-21-21_49_31.png)
-![Alt text](screencapture-localhost-5173-portfolio-2024-01-21-21_51_55.png)
+![Alt text](Utils/screencapture-localhost-5173-2024-01-21-21_49_31.png)
+![Alt text](Utils/screencapture-localhost-5173-portfolio-2024-01-21-21_51_55.png)
 At GHOvardhan, we've meticulously crafted a user interface that's not just functional but also intuitively engaging, thanks to our cutting-edge stack comprising React, Node.js, Vite, and MongoDB. Our deployment strategy ensures a harmonious integration of both frontend and backend components, providing a seamless and robust user experience.
 
 Frontend Deployment:
