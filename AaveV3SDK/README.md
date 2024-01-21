@@ -38,7 +38,7 @@ To use this SDK, ensure Node.js is installed on your system. Follow these steps 
 ```bash
 $ git  clone github.com/LFGHO/gho
 
-$ cd gho/CreditDelegationSDK
+$ cd gho/AaveV3SDK
 
 $ npm  install
 ```
