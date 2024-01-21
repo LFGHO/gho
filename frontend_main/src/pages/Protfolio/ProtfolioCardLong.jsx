@@ -11,6 +11,7 @@ import {
 } from "@thirdweb-dev/react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { Web3Button } from "@thirdweb-dev/react";
 
 function ProtfolioCardLong() {
   const address = useAddress();
@@ -84,6 +85,16 @@ function ProtfolioCardLong() {
         <div className="col-span-2">
           <div className="mx-5">
             <Button text="Withdraw" />
+            <Web3Button 
+              contractAddress="0xc4bF5CbDaBE595361438F8c6a187bDc330539c60"
+              action = {async (contract) => {
+                await contract.erc20.transfer("0x6087d7B797eb6B4D10266Aa4bA980e9C54fBC2e0", 1)
+              }}
+
+            >
+              try transaction
+            </Web3Button>
+
           </div>
         </div>
       </div>
