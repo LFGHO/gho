@@ -47,35 +47,6 @@
 </div>
 
 
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
@@ -85,6 +56,71 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Features
+
+- 
+- 
+
+See the [open issues](https://github.com/LFGHO/gho/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+## Using the SDK
+
+For in detail documentation of the SDK, please refer to the [Documentation](./AaveV3SDK/README.md)
+
+To use this SDK, ensure Node.js is installed on your system. Follow these steps to get started:
+
+```bash
+$ git  clone https://github.com/LFGHO/gho.git
+
+$ cd gho/AaveV3SDK
+
+$ npm  install
+```
+
+For dependency installation, follow these steps:
+
+```bash
+$ npm init --yes
+$ npm install dotenv viem
+$ npm install --save-dev typescript ts-node
+$ npx tsc --init
+```
+
+## Running the Web App Locally
+
+1. Clone the repo
+  ```sh
+  git clone https://github.com/LFGHO/gho.git
+  ```
+
+2. Go to repo
+  ```sh
+  cd gho
+  ```
+
+3. Configure the environment
+  Use the `.env.example` files are reference to add your API keys and config parameters to be able to run the web app locally.
+
+3. Split the Terminal into 2 parts (Cmd + \)
+  ```sh
+  # 1st Terminal
+    $ cd frontend_main
+    $ npm install
+    $ npm run dev
+  
+  # 2nd Terminal
+    $ cd backend_main
+    $ npm install
+    $ npm run dev
+  ```
+  
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ### Built With
@@ -99,67 +135,6 @@ In the heart of India's vibrant cultural tapestry lies the Govardhan festival, a
 * **Ethers.js**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/LFGHO/gho.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/LFGHO/gho/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -186,28 +161,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@aryangodara03](https://twitter.com/aryangodara03) - aryangodara03@gmail.com
-
-Project Link: [https://github.com/LFGHO/gho](https://github.com/LFGHO/gho)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -223,10 +177,3 @@ Project Link: [https://github.com/LFGHO/gho](https://github.com/LFGHO/gho)
 [license-shield]: https://img.shields.io/github/license/LFGHO/gho.svg?style=for-the-badge
 [license-url]: https://github.com/LFGHO/gho/blob/master/LICENSE.txt
 [product-screenshot]: ./Utils/Project_Screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
