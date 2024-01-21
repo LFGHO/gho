@@ -6,6 +6,8 @@ const dashboardControllers = require('../controllers/dashboard')
 router.post('/depositAmount', dashboardControllers.depositAmount);
 router.post('/saveAnswer', dashboardControllers.saveAnswer);
 router.post('/getUserData', dashboardControllers.getUserData);
+router.post('/addInList', dashboardControllers.addInList);
+router.post('/getList', dashboardControllers.getList);
 
 
 module.exports = router

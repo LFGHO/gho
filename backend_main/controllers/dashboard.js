@@ -7,6 +7,7 @@ const {
 } = require("../errors");
 
 const User = require("../models/user");
+const List = require("../models/List");
 const Transaction = require("../models/Transaction");
 
 const depositAmount = async (req, res) => {
@@ -125,8 +126,50 @@ const getUserData = async (req, res) => {
   }
 };
 
+
+const addInList = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    throw new BadRequestError("Please fill all the inputs", errors.array());
+  }
+
+  const { address, amount, i_rate, transactionType} = req.body;
+  const date = new Date();
+
+  try {
+    const list = new List({
+      address,
+      amount,
+      i_rate,
+      transactionType,
+      date,
+    });
+    await list.save();
+    res.status(StatusCodes.CREATED).json({ list });
+  } catch (error) {
+    console.log(error);
+    throw new InternalServerError("can't save list, try again later");
+  }
+};
+
+const getList = async (req, res) => {
+  const type = req.body.type;
+  console.log(type);
+  try {
+    const list = await List.find({ transactionType: type }, { _id: 0, __v:0 }).sort({ _id: -1 });
+    res.status(StatusCodes.OK).json({ list });
+  } catch (error) {
+    console.log(error);
+    throw new InternalServerError("can't get list, try again later");
+  }
+};
+
+
+
 module.exports = {
   depositAmount,
   saveAnswer,
   getUserData,
+  addInList,
+  getList,
 };
