@@ -16,7 +16,7 @@
   <p align="center">
     "GHOvardhan: Unleashing Digital Prosperity, Inspired by Tradition"
     <br />
-    <a href="learnhost.co.in">View Demo</a>
+    <a href="https://learnhost.co.in">View Demo</a>
     ·
     <a href="https://github.com/LFGHO/gho/issues">Report Bug</a>
     ·
